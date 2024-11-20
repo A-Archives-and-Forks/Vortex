@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { IAvailableExtension, IExtensionDownloadInfo } from '../extensions/extension_manager/types';
 import { ILoadOrderGameInfo } from '../extensions/file_based_loadorder/types/types';
 import {
@@ -61,6 +62,16 @@ export interface ThunkStore<S> extends Redux.Store<S> {
   dispatch: ThunkDispatch<S, null, Redux.Action>;
 }
 
+type NodeApiDotNetlistener = (assemblyName: string, assemblyVersion: string, resolve: (string) => void) => void;
+
+export interface IRegisterDotNetLibCall {
+  id: string;
+  priority: number;
+  assemblyFilePaths: string[];
+  testSupported?: TestSupported;
+  getListener?: () => NodeApiDotNetlistener;
+}
+
 export type PropsCallback = () => any;
 
 /**
@@ -97,6 +108,9 @@ export type RegisterFooter =
 
 export type RegisterBanner =
   (group: string, component: React.ComponentType<any>, options: IBannerOptions) => void;
+
+export type RegisterDotNetLib =
+  (libCall: IRegisterDotNetLibCall) => void;
 
 export interface IModSourceOptions {
   /**
@@ -1374,6 +1388,13 @@ export interface IExtensionContext {
    * If you call this multiple times, all ranges have to match so that makes little sense
    */
   requireVersion: (versionRange: string) => void;
+
+  /**
+   * The API is able to keep reference of added .NET assemblies to be used
+   *  across the application if necessary.
+   * @see {RegisterDotNetLib} name Name of the list for the assemblies the function provides
+   */
+  registerDotNetLib: (call: IRegisterDotNetLibCall) => void;
 
   /**
    * register a dependency on a different extension

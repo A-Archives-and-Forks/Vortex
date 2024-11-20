@@ -6,6 +6,7 @@ import {
   GameInfoQuery,
   IExtensionApi,
   IExtensionContext,
+  IRegisterDotNetLibCall,
 } from '../../types/IExtensionContext';
 import { IGame } from '../../types/IGame';
 import isIGame from '../../types/IGame.validator';
@@ -63,6 +64,7 @@ import * as path from 'path';
 import * as Redux from 'redux';
 import * as semver from 'semver';
 import React from 'react';
+import { DotNetHelper } from '../../util/api';
 
 const gameStoreLaunchers: IGameStore[] = [];
 
@@ -575,6 +577,11 @@ function init(context: IExtensionContext): boolean {
         message: gameStore.id,
       });
     }
+  }) as any;
+
+  context.registerDotNetLib = ((dotNetLib: IRegisterDotNetLibCall) => {
+    DotNetHelper.RegisterDotNetLib(dotNetLib);
+    DotNetHelper.init(context.api);
   }) as any;
 
   // TODO: hack, we need the extension path to get at the assets but this parameter

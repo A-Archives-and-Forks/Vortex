@@ -26,6 +26,7 @@ import sortMods, { CycleError } from '../extensions/mod_management/util/sort';
 import testModReference, { coerceToSemver } from '../extensions/mod_management/util/testModReference';
 import { convertGameIdReverse, nexusGameId } from '../extensions/nexus_integration/util/convertGameId';
 import GameStoreHelper from '../util/GameStoreHelper';
+import DotNetHelper from '../util/DotNetHelper';
 import { getApplication } from './application';
 import { Archive } from './archives';
 import bbcodeToReact, { bbcodeToHTML, preProcess as bbcodePreProcess } from './bbcode';
@@ -92,6 +93,7 @@ export {
   deepMerge,
   delay,
   deriveModInstallName as deriveInstallName,
+  DotNetHelper,
   epicGamesLauncher,
   extend,
   extractExeIcon,

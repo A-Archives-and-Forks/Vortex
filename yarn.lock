@@ -8863,6 +8863,11 @@ node-addon-api@^5.0.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-5.1.0.tgz#49da1ca055e109a23d537e9de43c09cca21eb762"
   integrity sha512-eh0GgfEkpnoWDq+VY8OyvYhFEzBk6jIYbRKdIlyTiAXIVJ8PyBaKb0rp7oDtoddbdoHWhq8wwr+XZ81F1rpNdA==
 
+node-api-dotnet@^0.8.16:
+  version "0.8.16"
+  resolved "https://registry.yarnpkg.com/node-api-dotnet/-/node-api-dotnet-0.8.16.tgz#ad9a50482c596a6c28b3cf2c30da3520c8cad915"
+  integrity sha512-w6+u1PpolCO7slqhoptTU5QfjoNz9qnNSQSqpJM4Qx1EVQ5HvJVMkH3XYr8MZLKYvqYibm9bHw+GuLNt7RHf1A==
+
 node-gyp-build@~4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.1.1.tgz#d7270b5d86717068d114cc57fff352f96d745feb"

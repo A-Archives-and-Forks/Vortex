@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { forgetExtension, removeExtension, setExtensionEnabled, setExtensionVersion } from '../actions/app';
 import { addNotification, closeDialog, DialogActions, DialogType, dismissNotification,
          IDialogContent, showDialog } from '../actions/notifications';
@@ -577,6 +578,7 @@ class ContextProxyHandler implements ProxyHandler<any> {
     // trick so we get a compile time error from tsc if this object doesn't
     // match the interface
     const dummy: IExtensionContext = {
+      registerDotNetLib: undefined,
       registerMainPage: undefined,
       registerDashlet: undefined,
       registerDialog: undefined,
