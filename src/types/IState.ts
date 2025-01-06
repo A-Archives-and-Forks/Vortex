@@ -219,6 +219,7 @@ export interface ISettingsDownloads {
   showGraph: boolean;
   copyOnIFF: boolean;
   collectionsInstallWhileDownloading: boolean;
+  experimentalDownloader: boolean;
 }
 
 export interface IStatePaths {

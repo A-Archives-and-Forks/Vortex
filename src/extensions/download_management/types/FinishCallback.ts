@@ -1,0 +1,1 @@
+export type FinishCallback = (paused: boolean, replaceFileName?: string) => void;

@@ -14,7 +14,7 @@ import { getSafe } from '../../util/storeHelper';
 import { toPromise, truthy } from '../../util/util';
 
 import { resolveCategoryName } from '../category_management';
-import { AlreadyDownloaded, DownloadIsHTML } from '../download_management/DownloadManager';
+import { AlreadyDownloaded, DownloadIsHTML } from '../download_management/types/Errors';
 import { SITE_ID } from '../gamemode_management/constants';
 import { IGameStoredExt } from '../gamemode_management/types/IGameStored';
 import { setUpdatingMods } from '../mod_management/actions/session';
@@ -42,6 +42,7 @@ import * as semver from 'semver';
 import { format as urlFormat } from 'url';
 import { ITokenReply } from './util/oauth';
 import { isLoggedIn } from './selectors';
+import NXMUrl from './NXMUrl';
 
 export function onChangeDownloads(api: IExtensionApi, nexus: Nexus) {
   const state: IState = api.store.getState();
@@ -418,6 +419,18 @@ export function onGetNexusCollections(api: IExtensionApi, nexus: Nexus)
         api.showErrorNotification('Failed to get list of collections', err);
         return Promise.resolve(undefined);
       });
+}
+
+export function onResolveModUrlV1(api: IExtensionApi, nexus: Nexus)
+    : (apiLink: string) => Promise<IDownloadURL[]> {
+  return (apiLink: string): Promise<IDownloadURL[]> => {
+    const nxm = new NXMUrl(apiLink);
+    return Promise.resolve(nexus.getDownloadURLs(nxm.modId, nxm.fileId, undefined, undefined, nxm.gameId))
+      .catch(err => {
+        api.showErrorNotification('Failed to get list of mods', err);
+        return Promise.resolve([]);
+      });
+  }   
 }
 
 export function onResolveCollectionUrl(api: IExtensionApi, nexus: Nexus)

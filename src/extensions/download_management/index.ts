@@ -1091,7 +1091,9 @@ function init(context: IExtensionContextExt): boolean {
               powerTimer = setTimeout(stopTimer, 60000);
             }
           }, `Nexus Client v2.${getApplication().version}`, protocolHandlers,
-          () => context.api.getState().settings.downloads.maxBandwidth * 8);
+          () => context.api.getState().settings.downloads.maxBandwidth * 8,
+          () => context.api.getState().settings.downloads.experimentalDownloader,
+          context.api); // not happy about adding the api at the bottom, but this component should've been made context aware from the start
       manager.setFileExistsCB(fileName => {
         return context.api.showDialog('question', 'File already exists', {
           text: 'You\'ve already downloaded the file "{{fileName}}", do you want to '

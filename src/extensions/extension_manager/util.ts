@@ -10,7 +10,7 @@ import { getSafe } from '../../util/storeHelper';
 import { INVALID_FILENAME_RE, truthy } from '../../util/util';
 
 import { addLocalDownload, setDownloadModInfo } from '../download_management/actions/state';
-import { AlreadyDownloaded } from '../download_management/DownloadManager';
+import { AlreadyDownloaded } from '../download_management/types/Errors';
 import { downloadPathForGame } from '../download_management/selectors';
 import { SITE_ID } from '../gamemode_management/constants';
 

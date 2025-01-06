@@ -12,7 +12,7 @@ interface ISpeedEntry {
  * @class SpeedCalculator
  */
 class SpeedCalculator {
-  private mCounters: { [ id: number ]: ISpeedEntry } = {};
+  private mCounters: { [id: number]: ISpeedEntry } = {};
   private mTimeSlices: number[] = [];
   private mHorizon: number;
   private mMeasureTime: number;
@@ -38,11 +38,20 @@ class SpeedCalculator {
 
     if (this.mCounters[id] === undefined) {
       // counter already stopped
-      return;
+      return false;
     }
 
     const secondsPassed = now - this.mCounters[id].lastMeasure;
     const perSec = count / (secondsPassed + 1);
+    this.updateTimeSlices(id, perSec, secondsPassed);
+
+    const starvation: boolean = this.checkStarvation(id, secondsPassed);
+
+    this.mCounters[id].lastMeasure = now;
+    return starvation;
+  }
+
+  private updateTimeSlices(id: number, perSec: number, secondsPassed: number): void {
     for (let i = this.mHorizon - secondsPassed - 1; i < this.mHorizon; ++i) {
       if (this.mTimeSlices[i] === undefined) {
         this.mTimeSlices[i] = 0;
@@ -53,16 +62,14 @@ class SpeedCalculator {
       this.mTimeSlices[i] += perSec;
       this.mCounters[id].timeSlices[i] += perSec;
     }
-    let starvation;
-    if ((secondsPassed > 0)
-        && (this.mCounters[id].timeSlices.length === this.mHorizon)) {
-      const rate =
-        sum(this.mCounters[id].timeSlices.slice(0, this.mHorizon - 1)) / (this.mHorizon - 1);
-      starvation = rate < ((this.mTargetRate / Object.keys(this.mCounters).length) / 5);
-    }
+  }
 
-    this.mCounters[id].lastMeasure = now;
-    return starvation;
+  private checkStarvation(id: number, secondsPassed: number): boolean {
+    if (secondsPassed > 0 && this.mCounters[id].timeSlices.length === this.mHorizon) {
+      const rate = sum(this.mCounters[id].timeSlices.slice(0, this.mHorizon - 1)) / (this.mHorizon - 1);
+      return rate < (this.mTargetRate / Object.keys(this.mCounters).length) / 5;
+    }
+    return false;
   }
 
   public stopCounter(id: number) {
@@ -75,8 +82,8 @@ class SpeedCalculator {
       for (let i = 0; i < time - this.mMeasureTime; ++i) {
         this.mTimeSlices.shift();
         Object.keys(this.mCounters)
-            .forEach(
-                counterId => { this.mCounters[counterId].timeSlices.shift(); });
+          .forEach(
+            counterId => { this.mCounters[counterId].timeSlices.shift(); });
       }
     }
     this.mMeasureTime = time;

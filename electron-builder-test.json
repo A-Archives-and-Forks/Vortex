@@ -15,7 +15,7 @@
     "node_modules/json-socket",
     "assets/*.exe",
     "assets/css/**",
-    "**/*.node"
+    "**/*"
   ],
   "afterSign": "./createMD5List.js",
   "appId": "com.nexusmods.vortex",

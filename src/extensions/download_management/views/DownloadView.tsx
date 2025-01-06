@@ -30,7 +30,7 @@ import { finishDownload, setDownloadTime } from '../actions/state';
 import { IDownload } from '../types/IDownload';
 import getDownloadGames from '../util/getDownloadGames';
 
-import { DownloadIsHTML } from '../DownloadManager';
+import { DownloadIsHTML } from '../types/Errors';
 
 import DownloadGraph from './DownloadGraph';
 

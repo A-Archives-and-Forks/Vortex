@@ -25,8 +25,11 @@ export const settingsReducer: IReducerSpec<ISettingsDownloads> = {
       setSafe(state, ['maxBandwidth'], payload),
     [actions.setCollectionConcurrency as any]: (state, payload) =>
       setSafe(state, ['collectionsInstallWhileDownloading'], payload),
+    [actions.setExperimentalDownloader as any]: (state, payload) =>
+      setSafe(state, ['experimentalDownloader'], payload),
   },
   defaults: {
+    experimentalDownloader: false,
     minChunkSize: 1024 * 1024,
     maxChunks: 10,
     maxParallelDownloads: 1,

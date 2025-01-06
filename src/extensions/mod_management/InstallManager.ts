@@ -27,7 +27,7 @@ import walk from '../../util/walk';
 import calculateFolderSize from '../../util/calculateFolderSize';
 
 import { resolveCategoryId } from '../category_management/util/retrieveCategoryPath';
-import { AlreadyDownloaded, DownloadIsHTML } from '../download_management/DownloadManager';
+import { AlreadyDownloaded, DownloadIsHTML } from '../download_management/types/Errors';
 import { IDownload } from '../download_management/types/IDownload';
 import { DOWNLOADS_DIR_TAG } from '../download_management/util/downloadDirectory';
 import getDownloadGames from '../download_management/util/getDownloadGames';

@@ -20,7 +20,7 @@ import { currentGame, getSafe } from '../../util/storeHelper';
 import { batchDispatch, decodeHTML, nexusModsURL, Section, truthy, Source, Campaign } from '../../util/util';
 
 import { ICategoryDictionary } from '../category_management/types/ICategoryDictionary';
-import { DownloadIsHTML } from '../download_management/DownloadManager';
+import { DownloadIsHTML } from '../download_management/types/Errors';
 import { IGameStored } from '../gamemode_management/types/IGameStored';
 import { IMod, IModRepoId } from '../mod_management/types/IMod';
 
@@ -1030,7 +1030,11 @@ function once(api: IExtensionApi, callbacks: Array<(nexus: NexusT) => void>) {
   api.onAsync('get-nexus-collection', eh.onGetNexusCollection(api, nexus));
   api.onAsync('get-nexus-collections', eh.onGetNexusCollections(api, nexus));
   api.onAsync('get-my-collections', eh.onGetMyCollections(api, nexus));
+
+  // same, same, but different
+  api.onAsync('resolve-mod-url', eh.onResolveModUrlV1(api, nexus));
   api.onAsync('resolve-collection-url', eh.onResolveCollectionUrl(api, nexus));
+
   api.onAsync('get-nexus-collection-revision', eh.onGetNexusCollectionRevision(api, nexus));
   api.onAsync('rate-nexus-collection-revision', eh.onRateRevision(api, nexus));
   api.onAsync('endorse-nexus-mod', eh.onEndorseDirect(api, nexus));

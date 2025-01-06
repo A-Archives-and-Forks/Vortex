@@ -2,7 +2,7 @@ import { RedownloadMode } from '../DownloadManager';
 import { IChunk } from './IChunk';
 
 export type DownloadState = 'init' | 'started' | 'paused' | 'finalizing' | 'finished' | 'failed' | 'redirect';
-
+export type DownloadWorkerType = 'regular' | 'experimental';
 export interface IDownloadFailCause {
   htmlFile?: string;
   message?: string;
@@ -14,6 +14,9 @@ export interface IDownloadOptions {
   // If available, will contain the user-friendly name of the mod. Will only be used in messages
   // to the user
   nameHint?: string;
+  apiKey?: string;
+  token?: string;
+  downloadWorkerType?: DownloadWorkerType;
 }
 
 /**
@@ -47,6 +50,14 @@ export interface IDownload {
    * @memberOf IDownload
    */
   urls: string[];
+
+  /**
+   * This is assigned on download start and is used to identify the type of download
+   *  worker to use. The chunking system in the download workers is substantially different
+   *  and therefore once a download was started with a specific worker type, it must be
+   *  continued with the same worker type.
+   */
+  downloadWorkerType: DownloadWorkerType;
 
   /**
    * path of the file being downloaded to. This is relative to the base download

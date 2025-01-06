@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { IExtensionApi } from '../../types/IExtensionContext';
 import { IState } from '../../types/IState';
 import {ProcessCanceled, TemporaryError, UserCanceled} from '../../util/CustomErrors';
@@ -29,13 +30,15 @@ import { ensureDownloadsDirectory } from './util/downloadDirectory';
 import getDownloadGames from './util/getDownloadGames';
 import { finalizeDownload } from './util/postprocessDownload';
 
-import DownloadManager, { AlreadyDownloaded, DownloadIsHTML, RedownloadMode } from './DownloadManager';
+import DownloadManager, { RedownloadMode } from './DownloadManager';
+import { AlreadyDownloaded, DownloadIsHTML } from './types/Errors';
 
 import Promise from 'bluebird';
 import * as path from 'path';
 import * as Redux from 'redux';
 import {generate as shortid} from 'shortid';
 import { getGames } from '../gamemode_management/util/getGame';
+import { apiKey } from '../nexus_integration/selectors';
 
 function progressUpdate(store: Redux.Store<any>, dlId: string, received: number,
                         total: number, chunks: IChunk[], chunkable: boolean,
@@ -254,6 +257,8 @@ export class DownloadObserver {
     const processCB = this.genProgressCB(id);
 
     const downloadOptions = this.getExtraDlOptions(modInfo ?? {}, redownload);
+    downloadOptions.token = this.mApi.store.getState().confidential.account.nexus.OAuthCredentials.token;
+    downloadOptions.apiKey = apiKey(this.mApi.store.getState());
 
     const urlIn = urls[0].split('<')[0];
 
@@ -496,7 +501,9 @@ export class DownloadObserver {
         this.mApi.store.dispatch(pauseDownload(downloadId, false, undefined));
 
         const extraInfo = this.getExtraDlOptions(download.modInfo ?? {}, 'always');
-
+        extraInfo.apiKey = apiKey(this.mApi.store.getState());
+        extraInfo.token = this.mApi.store.getState().confidential.account.nexus.OAuthCredentials.token;
+        extraInfo.downloadWorkerType = download.downloadWorkerType || 'regular';
         withContext(`Resuming "${download.localPath}"`, download.urls[0], () => {
           if (download.state === 'failed') {
             return ensureDownloadsDirectory(this.mApi)

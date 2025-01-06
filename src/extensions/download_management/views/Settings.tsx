@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { showDialog } from '../../../actions/notifications';
 import FlexLayout from '../../../controls/FlexLayout';
 import FormInput from '../../../controls/FormInput';
@@ -25,7 +26,7 @@ import { Campaign, ciEqual, isChildPath, isPathValid, isReservedDirectory,
          nexusModsURL, Section, Source } from '../../../util/util';
 import getTextMod from '../../mod_management/texts';
 import { PREMIUM_PATH } from '../../nexus_integration/constants';
-import { setCopyOnIFF, setDownloadPath, setMaxBandwidth, setMaxDownloads, setCollectionConcurrency } from '../actions/settings';
+import { setCopyOnIFF, setDownloadPath, setExperimentalDownloader, setMaxBandwidth, setMaxDownloads, setCollectionConcurrency } from '../actions/settings';
 import { setTransferDownloads } from '../actions/transactions';
 
 import { DOWNLOADS_DIR_TAG, writeDownloadsTag } from '../util/downloadDirectory';
@@ -55,6 +56,7 @@ interface IConnectedProps {
   copyOnIFF: boolean;
   maxBandwidth: number;
   collectionsInstallWhileDownloading: boolean;
+  experimentalDownloader: boolean;
 }
 
 interface IActionProps {
@@ -68,6 +70,7 @@ interface IActionProps {
   onSetCopyOnIFF: (enabled: boolean) => void;
   onSetMaxBandwidth: (bps: number) => void;
   onSetCollectionConcurrency: (enabled: boolean) => void;
+  onSetExperimentalDownloaderEnabled: (enabled: boolean) => void;
 }
 
 type IProps = IActionProps & IConnectedProps;
@@ -101,7 +104,7 @@ class Settings extends ComponentEx<IProps, IComponentState> {
   }
 
   public render(): JSX.Element {
-    const { t, copyOnIFF, downloads, isPremium, maxBandwidth, parallelDownloads } = this.props;
+    const { t, copyOnIFF, downloads, isPremium, maxBandwidth, parallelDownloads, experimentalDownloader } = this.props;
     const { downloadPath, progress, progressFile } = this.state;
 
     const pathPreview = getDownloadPath(downloadPath);
@@ -237,6 +240,12 @@ class Settings extends ComponentEx<IProps, IComponentState> {
           >
             {t('Copy files when using "Install From File"')}
           </Toggle>
+          <Toggle
+            checked={experimentalDownloader}
+            onToggle={this.toggleExperimentalDownloader}
+          >
+            {t('Enable Experimental Downloader')}
+          </Toggle>
         </FormGroup>
       </form>
     );
@@ -256,6 +265,10 @@ class Settings extends ComponentEx<IProps, IComponentState> {
 
   private toggleCollectionInstallConcurrency = (newValue: boolean) => {
     this.props.onSetCollectionConcurrency(newValue);
+  }
+
+  private toggleExperimentalDownloader = (newValue: boolean) => {
+    this.props.onSetExperimentalDownloaderEnabled(newValue);
   }
 
   private isPathSensible(input: string): boolean {
@@ -717,6 +730,7 @@ function mapStateToProps(state: IState): IConnectedProps {
     copyOnIFF: state.settings.downloads.copyOnIFF,
     maxBandwidth: state.settings.downloads.maxBandwidth,
     collectionsInstallWhileDownloading: state.settings.downloads.collectionsInstallWhileDownloading
+    experimentalDownloader: state.settings.downloads.experimentalDownloader,
   };
 }
 
@@ -733,6 +747,7 @@ function mapDispatchToProps(dispatch: ThunkDispatch<any, null, Redux.Action>): I
     onSetCopyOnIFF: (enabled: boolean) => dispatch(setCopyOnIFF(enabled)),
     onSetMaxBandwidth: (bps: number) => dispatch(setMaxBandwidth(bps)),
     onSetCollectionConcurrency: (enabled: boolean) => dispatch(setCollectionConcurrency(enabled)),
+    onSetExperimentalDownloaderEnabled: (enabled: boolean) => dispatch(setExperimentalDownloader(enabled)),
   };
 }
 
