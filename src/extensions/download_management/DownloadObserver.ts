@@ -349,8 +349,17 @@ export class DownloadObserver {
           const dlId = Object.keys(downloads)
             .find(iter => downloads[iter].localPath === err.fileName);
           if ((dlId !== undefined) && (downloads[dlId].state !== 'failed')) {
-            err.downloadId = dlId;
-            return Promise.reject(err);
+            // File already exists and download is successful - return existing download as success
+            const existingDownload = downloads[dlId];
+            const downloadResult: IDownloadResult = {
+              filePath: path.join(downloadPath, existingDownload.localPath || err.fileName),
+              headers: existingDownload.modInfo?.headers || {},
+              unfinishedChunks: existingDownload.chunks || [],
+              hadErrors: false,
+              size: existingDownload.size || 0,
+              metaInfo: existingDownload.modInfo || {},
+            };
+            return Promise.resolve(downloadResult);
           } else if (this.wasIntercepted(modInfo?.referenceTag)) {
             this.mInterceptedDownloads = this.mInterceptedDownloads
               .filter(iter => iter.tag !== modInfo?.referenceTag);
@@ -652,13 +661,8 @@ export class DownloadObserver {
       return;
     }
     if (['paused'].includes(download.state)) {
-      if (download.chunks > 0) {
         log('debug', 'attempting to resume download', { id: downloadId, state: download.state });
         return this.handleResumeDownload(downloadId, callback);
-      } else {
-        return this.handleStartDownload(download.urls, download.modInfo,
-          download.localPath, callback, 'never');
-      }
     }
     log('debug', 'not resuming download', { id: downloadId, state: download.state })
     if (callback !== undefined) {
