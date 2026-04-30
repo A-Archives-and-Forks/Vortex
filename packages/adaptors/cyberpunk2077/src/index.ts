@@ -1,33 +1,33 @@
-import { getContainer, provides } from "@vortex/adaptor-api";
-import type { IGameInfoService } from "@vortex/adaptor-api/contracts/game-info";
-import { gameInfo } from "@vortex/adaptor-api/contracts/game-info";
+import { getContainer, provides } from "@nexusmods/adaptor-api";
+import type { IGameInfoService } from "@nexusmods/adaptor-api/contracts/game-info";
+import { gameInfo } from "@nexusmods/adaptor-api/contracts/game-info";
 import type {
   IGameInstallerService,
   InstallMapping,
   StopPattern,
-} from "@vortex/adaptor-api/contracts/game-installer";
-import { resolveStopPatterns } from "@vortex/adaptor-api/contracts/game-installer";
+} from "@nexusmods/adaptor-api/contracts/game-installer";
+import { resolveStopPatterns } from "@nexusmods/adaptor-api/contracts/game-installer";
 import type {
   GamePaths,
   IGamePathService,
-} from "@vortex/adaptor-api/contracts/game-paths";
-import { rehydrateGamePaths } from "@vortex/adaptor-api/contracts/game-paths";
-import { peHeader } from "@vortex/adaptor-api/contracts/game-version";
-import type { VersionSource } from "@vortex/adaptor-api/contracts/game-version";
-import type { IGameToolsService } from "@vortex/adaptor-api/contracts/game-tools";
-import { gameTools } from "@vortex/adaptor-api/contracts/game-tools";
+} from "@nexusmods/adaptor-api/contracts/game-paths";
+import { rehydrateGamePaths } from "@nexusmods/adaptor-api/contracts/game-paths";
+import { peHeader } from "@nexusmods/adaptor-api/contracts/game-version";
+import type { VersionSource } from "@nexusmods/adaptor-api/contracts/game-version";
+import type { IGameToolsService } from "@nexusmods/adaptor-api/contracts/game-tools";
+import { gameTools } from "@nexusmods/adaptor-api/contracts/game-tools";
 import type {
   IGameLoadOrderService,
   LoadOrderDefinition,
   LoadOrderEntry,
   LoadOrderState,
-} from "@vortex/adaptor-api/contracts/load-order";
+} from "@nexusmods/adaptor-api/contracts/load-order";
 import type {
   IGamePrelaunchService,
   PrelaunchTask,
-} from "@vortex/adaptor-api/contracts/prelaunch";
-import type { StorePathProvider } from "@vortex/adaptor-api/stores/lib";
-import { Base } from "@vortex/adaptor-api/stores/lib";
+} from "@nexusmods/adaptor-api/contracts/prelaunch";
+import type { StorePathProvider } from "@nexusmods/adaptor-api/stores/lib";
+import { Base } from "@nexusmods/adaptor-api/stores/lib";
 import type { IFileSystem } from "@vortex/fs";
 import { QualifiedPath, type RelativePath } from "@vortex/fs";
 

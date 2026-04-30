@@ -18,6 +18,7 @@ on:
         options:
           - fixed
           - released
+          - ignored
       release_version:
         description: "Release version (required when status is released and remove is false)"
         required: false
@@ -30,7 +31,7 @@ jobs:
   sync:
     runs-on: [self-hosted]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: ./.github/actions/fingerprints
         with:
           mode: resolve
