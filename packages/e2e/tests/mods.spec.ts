@@ -1,16 +1,7 @@
 /**
- * Mod download tests.
- * Covers Linear ticket: QA-108 (Mods: [9.1] - I can successfully download a mod
- * via mod manager).
- *
- * Both free- and premium-user variants:
- *   - Free users hit a "Slow download" interstitial with a countdown before
- *     the nxm:// URL fires.
- *   - Premium users skip the interstitial — the URL is wired into the page
- *     immediately after the requirements modal.
- *
- * The test downloads SMAPI (https://www.nexusmods.com/stardewvalley/mods/2400)
- * because it has no further prerequisites — the install completes cleanly.
+ * QA-108: free + premium user can download a mod via the Mod Manager link.
+ * SMAPI (mods/2400) — picked because it has no further prerequisites, so the
+ * install completes cleanly. Premium users skip the slow-download interstitial.
  */
 import type { Browser } from "@playwright/test";
 import { test, expect } from "../fixtures/vortex-app";
@@ -30,8 +21,7 @@ const TIERS = [
 ] as const;
 
 test.describe("Mods - Downloads", () => {
-  // Each tier gets its own worker — fresh Vortex per test so login state
-  // and managed game don't bleed between users.
+  // Fresh Vortex per test so login state and managed game don't leak.
   test.describe.configure({ mode: "parallel" });
 
   for (const { tier, user } of TIERS) {
@@ -39,15 +29,14 @@ test.describe("Mods - Downloads", () => {
       vortexApp,
       vortexWindow,
     }) => {
-      // Login + manage + website nav + (free) countdown adds up.
       test.setTimeout(180_000);
 
       let managed: ManagedGame | null = null;
       let authBrowser: Browser | null = null;
 
       try {
-        // Login first (Vortex still in clean state — login UI's selectors
-        // match reliably), then manage SDV so downloads have a destination.
+        // Login before manageGame — Vortex's login UI selectors only match
+        // reliably while no game is active.
         const auth = await loginToNexus(vortexApp, vortexWindow, user, {
           keepBrowser: true,
           headless: false,
@@ -79,10 +68,6 @@ test.describe("Mods - Downloads", () => {
         let nxmUrl: string | null = null;
 
         await test.step("Open the Mod Manager Download requirements modal", async () => {
-          // The "Vortex" link on the mod page has class `popup-btn-ajax` and
-          // points at /Core/Libs/Common/Widgets/ModRequirementsPopUp; clicking
-          // opens an AJAX modal listing required mods (e.g. SMAPI). Mods
-          // without dependencies skip the modal.
           const modManagerLink = auth.page
             .getByRole("link", { name: /mod manager download|vortex/i })
             .first();
@@ -98,10 +83,8 @@ test.describe("Mods - Downloads", () => {
             .catch(() => false);
 
           if (modalAppeared) {
-            // The modal IS the requirements popup for mods that have deps.
-            // For mods without deps (or for premium users who bypass it)
-            // there's no "Download" link inside — the nxm:// URL fires
-            // directly. Proceed if the inner button is missing.
+            // Premium users (and dep-free mods) skip this confirmation —
+            // the nxm:// URL fires directly without an inner Download link.
             const modalDownloadButton = modal
               .getByRole("link", { name: /^download$/i })
               .first();
@@ -116,15 +99,13 @@ test.describe("Mods - Downloads", () => {
         });
 
         await test.step("Capture the nxm:// URL", async () => {
-          // Free users land on a Slow download interstitial with a countdown;
-          // premium users skip it and the nxm:// link is wired into the page
-          // directly. Click the Slow download button only if it appears.
           await auth.page
             .waitForLoadState("load", { timeout: 30_000 })
             .catch(() => undefined);
           await acceptConsent(auth.page);
           await installNxmCapture(auth.page);
 
+          // Free users see a Slow-download interstitial; premium users don't.
           const slowDownloadButton = auth.page.getByRole("button", {
             name: "Slow download",
           });
@@ -164,7 +145,6 @@ test.describe("Mods - Downloads", () => {
         });
 
         await test.step("Verify SMAPI is installed in Vortex", async () => {
-          // Give Vortex time to download and install before checking Mods.
           await vortexWindow.waitForTimeout(5_000);
 
           const navbar = new NavBar(vortexWindow);
