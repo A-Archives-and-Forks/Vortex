@@ -69,7 +69,7 @@ export const Header: FC = () => {
           <span className="shrink-0 text-neutral-strong">{title}</span>
 
           {profileName && (
-            <span className="min-w-0 max-w-[33%] truncate text-neutral-subdued">
+            <span className="max-w-[33%] min-w-0 truncate text-neutral-subdued">
               {profileName}
             </span>
           )}
