@@ -1,11 +1,6 @@
 import type { Locator, Page } from "@playwright/test";
 
-/**
- * Selectors for the cookie-consent banners that Nexus Mods shows. Geo / A-B
- * decides which CMP appears, so we model them all and let the helper pick
- * the first one visible. Quantcast can also render inside an iframe — the
- * helper handles that out-of-band.
- */
+// Geo / A-B decides which CMP appears, so we model all observed ones.
 export class CookieConsent {
   readonly page: Page;
   readonly quantcastAccept: Locator;

@@ -1,15 +1,8 @@
 import type { Page } from "@playwright/test";
 
-/**
- * Install JS hooks in the page that catch any nxm:// URL the site tries to
- * fire. Chrome has no protocol handler registered for nxm:// in the test
- * browser, so navigation silently fails and Playwright's framenavigated /
- * popup events don't see it. We hook window.open, location.assign /
- * location.replace, and bubble-phase clicks on <a href="nxm:..."> so we can
- * still capture the URL at the source.
- *
- * Captured URL ends up on `globalThis.__capturedNxm`.
- */
+// Chrome has no nxm:// protocol handler in the test browser, so navigation
+// silently fails and Playwright's framenavigated/popup events don't fire.
+// Hook the JS entry points instead. Captured URL lands on globalThis.__capturedNxm.
 export async function installNxmCapture(page: Page): Promise<void> {
   await page
     .evaluate(() => {
@@ -71,12 +64,8 @@ export async function installNxmCapture(page: Page): Promise<void> {
     .catch(() => undefined);
 }
 
-/**
- * Poll for an nxm:// URL on the page. Checks the JS-hook global first, then
- * scans the live DOM HTML — the slow-download flow writes the URL into the
- * rendered DOM (anchor href / data attribute) when the countdown completes.
- * Returns null on timeout.
- */
+// DOM scan is the fallback — the slow-download flow writes the nxm:// URL into
+// the rendered DOM (anchor href / data attribute) when the countdown completes.
 export async function waitForNxmUrl(
   page: Page,
   timeoutMs: number,

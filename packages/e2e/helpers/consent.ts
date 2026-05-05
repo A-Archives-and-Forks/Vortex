@@ -2,12 +2,7 @@ import type { Page } from "@playwright/test";
 
 import { CookieConsent } from "../selectors/cookieConsent";
 
-/**
- * Click whichever cookie-consent acceptance button is on screen — Nexus Mods
- * shows different CMPs depending on geo / A-B (Quantcast Choice and Cookiebot
- * have both been observed). Some download-flow JS is gated on consent state,
- * so we accept rather than remove the dialog. Silently no-ops if no banner.
- */
+// Accept rather than dismiss — some download-flow JS is gated on consent state.
 export async function acceptConsent(page: Page): Promise<void> {
   const consent = new CookieConsent(page);
   const candidates = [
@@ -29,7 +24,7 @@ export async function acceptConsent(page: Page): Promise<void> {
       return;
     }
   }
-  // Quantcast renders inside an iframe; check frames as a fallback.
+  // Quantcast can render inside an iframe.
   for (const frame of page.frames()) {
     const acceptInFrame = frame
       .locator("button#accept-btn, button:has-text('Allow all')")
