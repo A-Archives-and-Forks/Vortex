@@ -1846,6 +1846,15 @@ class ExtensionManager {
   }
 
   private selectFile(options: IOpenOptions): PromiseBB<string> {
+    // Test hook: e2e tests can't drive native file pickers, so they preload
+    // the path via globalThis.__VORTEX_TEST_INSTALL_FILE_PATH__ and bypass
+    // the dialog. Mirrors __VORTEX_TEST_GAME_PATH__ in gamemode_management.
+    const testPath = (global as any).__VORTEX_TEST_INSTALL_FILE_PATH__;
+    if (testPath !== undefined) {
+      delete (global as any).__VORTEX_TEST_INSTALL_FILE_PATH__;
+      return PromiseBB.resolve(testPath);
+    }
+
     const fullOptions: OpenDialogOptions = {
       ..._.omit(options, ["create"]),
       properties: ["openFile"],
