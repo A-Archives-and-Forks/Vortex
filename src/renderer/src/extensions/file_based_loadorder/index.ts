@@ -12,7 +12,7 @@ import * as selectors from "../../util/selectors";
 import { setFBLoadOrder } from "./actions/loadOrder";
 import { setValidationResult } from "./actions/session";
 import { generate, Interface, parser } from "./collections/loadOrder";
-import { addGameEntry, findGameEntry } from "./gameSupport";
+import { addGameEntry, addGameEntryInline, findGameEntry } from "./gameSupport";
 import { modLoadOrderReducer } from "./reducers/loadOrder";
 import { sessionReducer } from "./reducers/session";
 import { currentGameMods, currentLoadOrderForProfile } from "./selectors";
@@ -412,6 +412,15 @@ export default function init(context: IExtensionContext) {
   context.registerLoadOrder = ((gameInfo: ILoadOrderGameInfo, extPath: string) => {
     addGameEntry(gameInfo, extPath);
   }) as any;
+
+  // Expose a runtime API so callers that run after init (e.g. the
+  // adaptor bridge's setup callback) can register load order pages.
+  context.registerAPI(
+    "addLoadOrderPage",
+    (gameInfo: ILoadOrderGameInfo, isContributed?: boolean) =>
+      addGameEntryInline(gameInfo, isContributed ?? false),
+    { minArguments: 1 },
+  );
 
   context.optional.registerCollectionFeature(
     "file_based_load_order_collection_data",
