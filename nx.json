@@ -3,7 +3,6 @@
   "defaultBase": "master",
   "neverConnectToCloud": true,
   "analytics": false,
-  "useInferencePlugins": true,
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"]
