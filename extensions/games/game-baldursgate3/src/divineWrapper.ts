@@ -7,7 +7,9 @@ import { GAME_ID } from "./common";
 import {
   DEFAULT_TIMEOUT_MS,
   DivineAborted,
+  DivineExecMissing,
   DivineMissingDotNet,
+  DivinePakInvalid,
   IDivineRunOptions,
   parsePackageListOutput,
   runDivineCore,
@@ -15,11 +17,17 @@ import {
 import { DivineAction, IDivineOptions, IDivineOutput } from "./types";
 import { getLatestLSLibMod, logError } from "./util";
 
-// Run 5 concurrent Divine processes - retry each process 5 times if it fails,
-// but do not retry aborted operations — they should fail fast.
+// Run 5 concurrent Divine processes. Retry on transient failures, but fail
+// fast for deterministic ones — retrying a missing exe, a missing .NET
+// runtime, or a malformed pak just multiplies log volume without changing
+// the outcome.
 const concurrencyLimiter: util.ConcurrencyLimiter = new util.ConcurrencyLimiter(
   5,
-  (err: Error) => !(err instanceof DivineAborted),
+  (err: Error) =>
+    !(err instanceof DivineAborted) &&
+    !(err instanceof DivineExecMissing) &&
+    !(err instanceof DivineMissingDotNet) &&
+    !(err instanceof DivinePakInvalid),
 );
 
 // Module-level AbortController lets callers cancel all in-flight and queued
