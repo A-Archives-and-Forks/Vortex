@@ -13,8 +13,7 @@ import {
 import type { AppInitMetadata } from "@vortex/shared/ipc";
 import type { IWindow } from "@vortex/shared/state";
 import { currentStatePath } from "@vortex/shared/state";
-import crashDump from "crash-dump";
-import { app, dialog, ipcMain, protocol, shell } from "electron";
+import { app, crashReporter, dialog, ipcMain, protocol, shell } from "electron";
 import contextMenu from "electron-context-menu";
 import isAdmin from "is-admin";
 import * as _ from "lodash";
@@ -119,7 +118,6 @@ class Application {
   private mAppMetadata: AppInitMetadata;
   private mFirstStart: boolean = false;
   private mStartupLogPath: string;
-  private mDeinitCrashDump: () => void;
 
   constructor(args: IParameters) {
     this.mArgs = args;
@@ -138,18 +136,11 @@ class Application {
     mkdirSync(path.join(tempPath, "dumps"), { recursive: true });
 
     this.mStartupLogPath = path.join(tempPath, "startup.log");
-    try {
-      statSync(this.mStartupLogPath);
-      process.env.CRASH_REPORTING = Math.random() > 0.5 ? "vortex" : "electron";
-    } catch {
-      // nop, this is the expected case
-    }
 
-    // NOTE(erri120): crash-dump is mistyped
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.mDeinitCrashDump = (crashDump as any).default(
-      path.join(tempPath, "dumps", `crash-main-${Date.now()}.dmp`),
-    );
+    app.setPath("crashDumps", path.join(tempPath, "dumps"));
+    crashReporter.start({
+      uploadToServer: false,
+    });
 
     const enableLogging =
       process.env.NODE_ENV === "development" || process.env.VORTEX_ENABLE_LOGGING === "1";
@@ -216,9 +207,6 @@ class Application {
           DuckDBSingleton.getInstance().close();
           if (this.mTray !== undefined) {
             this.mTray.close();
-          }
-          if (this.mDeinitCrashDump !== undefined) {
-            this.mDeinitCrashDump();
           }
           if (process.platform !== "darwin") {
             // All windows are already destroyed at this point (via the

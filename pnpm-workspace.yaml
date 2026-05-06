@@ -15,7 +15,7 @@ allowBuilds:
   "@parcel/watcher": true
   bsatk: true
   core-js: true
-  crash-dump: true
+
   drivelist: true
   electron: true
   esbuild: true
@@ -139,7 +139,7 @@ catalog:
   content-disposition: ^0.5.3
   content-type: ^1.0.4
   copyfiles: ^2.4.1
-  crash-dump: git+https://github.com/Nexus-Mods/node-crash-dump#7fc76dabdc9117a7f238d7bf5e5fb7841a374804
+
   crc-32: ^1.2.1
   cross-env: ^10.1.0
   cross-fetch: ^3.1.5

@@ -36,7 +36,7 @@ This is a list of all modules leaked by Vortex to extensions. Any module listed 
 | commander                               | 4.1.1                           |
 | content-disposition                     | 0.5.4                           |
 | content-type                            | 1.0.5                           |
-| crash-dump                              | 2.0.2                           |
+
 | d3                                      | 5.16.0                          |
 | date-fns                                | 2.30.0                          |
 | dayjs                                   | 1.11.20                         |
