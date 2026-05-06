@@ -11,4 +11,7 @@ export default defineConfig({
   exports: {
     devExports: "development",
   },
+  outputOptions: {
+    exports: "named",
+  },
 });
