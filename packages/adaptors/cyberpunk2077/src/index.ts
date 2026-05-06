@@ -1,4 +1,6 @@
 import { getContainer, provides } from "@nexusmods/adaptor-api";
+import type { StorePathProvider } from "@nexusmods/adaptor-api";
+import { Base } from "@nexusmods/adaptor-api";
 import type { IGameInfoService } from "@nexusmods/adaptor-api/contracts/game-info";
 import { gameInfo } from "@nexusmods/adaptor-api/contracts/game-info";
 import type {
@@ -7,13 +9,8 @@ import type {
   StopPattern,
 } from "@nexusmods/adaptor-api/contracts/game-installer";
 import { resolveStopPatterns } from "@nexusmods/adaptor-api/contracts/game-installer";
-import type {
-  GamePaths,
-  IGamePathService,
-} from "@nexusmods/adaptor-api/contracts/game-paths";
+import type { GamePaths, IGamePathService } from "@nexusmods/adaptor-api/contracts/game-paths";
 import { rehydrateGamePaths } from "@nexusmods/adaptor-api/contracts/game-paths";
-import { peHeader } from "@nexusmods/adaptor-api/contracts/game-version";
-import type { VersionSource } from "@nexusmods/adaptor-api/contracts/game-version";
 import type { IGameToolsService } from "@nexusmods/adaptor-api/contracts/game-tools";
 import { gameTools } from "@nexusmods/adaptor-api/contracts/game-tools";
 import type {
@@ -26,8 +23,8 @@ import type {
   IGamePrelaunchService,
   PrelaunchTask,
 } from "@nexusmods/adaptor-api/contracts/prelaunch";
-import type { StorePathProvider } from "@nexusmods/adaptor-api";
-import { Base } from "@nexusmods/adaptor-api";
+import { peHeader } from "@nexusmods/adaptor-api/contracts/game-version";
+import type { VersionSource } from "@nexusmods/adaptor-api/contracts/game-version";
 import type { FileSystem } from "@nexusmods/adaptor-api/fs";
 import { QualifiedPath, type RelativePath } from "@nexusmods/adaptor-api/fs";
 
@@ -66,20 +63,14 @@ export class GamePathService implements IGamePathService<CyberpunkExtras> {
     // A gameOS of Linux means the caller handed us a native Linux
     // discovery, which cannot exist for this title.
     if (!provider.isWindows) {
-      throw new Error(
-        "Cyberpunk 2077 has no native Linux build; gameOS must be Windows (Proton)",
-      );
+      throw new Error("Cyberpunk 2077 has no native Linux build; gameOS must be Windows (Proton)");
     }
 
     const game = await provider.fromBase(Base.Game);
     const home = await provider.fromBase(Base.Home);
     const appData = await provider.fromBase(Base.AppData);
     const saves = home.join("Saved Games", "CD Projekt Red", "Cyberpunk 2077");
-    const preferences = appData.join(
-      "Local",
-      "CD Projekt Red",
-      "Cyberpunk 2077",
-    );
+    const preferences = appData.join("Local", "CD Projekt Red", "Cyberpunk 2077");
 
     return { game, saves, preferences };
   }
@@ -98,12 +89,7 @@ export class GameToolsService implements IGameToolsService<CyberpunkExtras> {
       game: rehydrated.game.join("bin", "x64", "Cyberpunk2077.exe"),
       tools: {
         redmod: {
-          executable: rehydrated.game.join(
-            "tools",
-            "redmod",
-            "bin",
-            "redMod.exe",
-          ),
+          executable: rehydrated.game.join("tools", "redmod", "bin", "redMod.exe"),
           name: "REDmod",
         },
       },
