@@ -42,8 +42,8 @@ import type { IExtensionContext } from "../../types/IExtensionContext";
 import type { IState } from "../../types/IState";
 import { log } from "../../util/log";
 import * as selectors from "../../util/selectors";
-import { addDiscoveredGame } from "../gamemode_management/actions/settings";
 import { setKnownGames } from "../gamemode_management/actions/session";
+import { addDiscoveredGame } from "../gamemode_management/actions/settings";
 
 // ---------------------------------------------------------------------------
 // Type definitions for adaptor IPC responses
@@ -306,19 +306,17 @@ function registerAdaptorLoadOrder(
     | undefined;
 
   if (!addLoadOrderPage) {
-    log(
-      "warn",
-      "[adaptor-bridge] addLoadOrderPage API not available, skipping {{lo}}",
-      { lo: loId },
-    );
+    log("warn", "[adaptor-bridge] addLoadOrderPage API not available, skipping {{lo}}", {
+      lo: loId,
+    });
     return;
   }
 
-  log(
-    "info",
-    "[adaptor-bridge] Registering load order: {{gameId}}/{{lo}} ({{name}})",
-    { gameId, lo: loId, name: displayName },
-  );
+  log("info", "[adaptor-bridge] Registering load order: {{gameId}}/{{lo}} ({{name}})", {
+    gameId,
+    lo: loId,
+    name: displayName,
+  });
 
   addLoadOrderPage(
     {
@@ -328,12 +326,10 @@ function registerAdaptorLoadOrder(
       usageInstructions: description,
 
       deserializeLoadOrder: async () => {
-        const state = (await callAdaptor(
-          adaptorName,
-          loadOrderUri,
-          "getLoadOrderState",
-          [paths, loId],
-        )) as {
+        const state = (await callAdaptor(adaptorName, loadOrderUri, "getLoadOrderState", [
+          paths,
+          loId,
+        ])) as {
           entries: Array<{
             id: string;
             name: string;
@@ -366,15 +362,8 @@ function registerAdaptorLoadOrder(
           enabled: e.enabled,
           data: e.data as Record<string, unknown> | undefined,
         }));
-        await callAdaptor(adaptorName, loadOrderUri, "setEntryOrder", [
-          paths,
-          loId,
-          entries,
-        ]);
-        await callAdaptor(adaptorName, loadOrderUri, "serializeToDisk", [
-          paths,
-          loId,
-        ]);
+        await callAdaptor(adaptorName, loadOrderUri, "setEntryOrder", [paths, loId, entries]);
+        await callAdaptor(adaptorName, loadOrderUri, "serializeToDisk", [paths, loId]);
       },
 
       validate: async () => {
@@ -620,9 +609,7 @@ function registerAdaptor(context: IExtensionContext, adaptor: AdaptorEntry): voi
           // relative to the game directory, so convert to native and
           // compute relative from gamePath.
           if (tools?.game?.executable) {
-            const exeNative = qpPathToNative(
-              tools.game.executable as unknown as SerializedQP,
-            );
+            const exeNative = qpPathToNative(tools.game.executable as unknown as SerializedQP);
             resolvedExecutable = path.relative(gamePath, exeNative);
             // Update the persisted discovery so StarterInfo picks up
             // the real executable on subsequent launches.
@@ -632,12 +619,12 @@ function registerAdaptor(context: IExtensionContext, adaptor: AdaptorEntry): voi
             // Also patch the session-only known games list so the
             // current session's StarterInfo uses the resolved exe
             // instead of the placeholder ".".
-            const known = context.api.store.getState().session.gameMode
-              .known as Array<{ id: string; executable: string }>;
+            const known = context.api.store.getState().session.gameMode.known as Array<{
+              id: string;
+              executable: string;
+            }>;
             const updated = known.map((g) =>
-              g.id === gameId
-                ? { ...g, executable: resolvedExecutable }
-                : g,
+              g.id === gameId ? { ...g, executable: resolvedExecutable } : g,
             );
             context.api.store.dispatch(setKnownGames(updated));
           }
@@ -706,26 +693,16 @@ function registerAdaptor(context: IExtensionContext, adaptor: AdaptorEntry): voi
           // calls to the adaptor's IGameLoadOrderService via IPC.
           if (loadOrderUri && paths !== null) {
             try {
-              const loadOrders = (await callAdaptor(
-                name,
-                loadOrderUri,
-                "getLoadOrders",
-                [paths],
-              )) as Array<{
+              const loadOrders = (await callAdaptor(name, loadOrderUri, "getLoadOrders", [
+                paths,
+              ])) as Array<{
                 id: string;
                 displayName: string;
                 description?: string;
               }>;
 
               for (const lo of loadOrders) {
-                registerAdaptorLoadOrder(
-                  context,
-                  name,
-                  gameId,
-                  loadOrderUri,
-                  paths,
-                  lo,
-                );
+                registerAdaptorLoadOrder(context, name, gameId, loadOrderUri, paths, lo);
               }
             } catch (err) {
               log(
@@ -828,68 +805,51 @@ function init(context: IExtensionContext): boolean {
   // before the game launches. Priority 90 runs before deployment checks
   // (100). The hook queries the adaptor's prelaunch service, evaluates
   // conditions, and runs qualifying tasks.
-  context.registerStartHook?.(
-    90,
-    "adaptor-prelaunch",
-    async (input) => {
-      const state: IState = context.api.getState();
-      const gameId = selectors.activeGameId(state);
-      if (!gameId) return input;
+  context.registerStartHook?.(90, "adaptor-prelaunch", async (input) => {
+    const state: IState = context.api.getState();
+    const gameId = selectors.activeGameId(state);
+    if (!gameId) return input;
 
-      const info = prelaunchRegistry.get(gameId);
-      if (!info) return input;
+    const info = prelaunchRegistry.get(gameId);
+    if (!info) return input;
 
-      try {
-        const tasks = (await callAdaptor(
-          info.adaptorName,
-          info.prelaunchUri,
-          "getPrelaunchTasks",
-          [info.paths],
-        )) as Array<{
-          id: string;
-          name: string;
-          executable: { path: string };
-          args?: string[];
-          conditional?: boolean;
-        }>;
+    try {
+      const tasks = (await callAdaptor(info.adaptorName, info.prelaunchUri, "getPrelaunchTasks", [
+        info.paths,
+      ])) as Array<{
+        id: string;
+        name: string;
+        executable: { path: string };
+        args?: string[];
+        conditional?: boolean;
+      }>;
 
-        for (const task of tasks) {
-          let shouldRun = true;
-          if (task.conditional) {
-            shouldRun = (await callAdaptor(
-              info.adaptorName,
-              info.prelaunchUri,
-              "shouldRun",
-              [info.paths, task.id],
-            )) as boolean;
-          }
-
-          if (shouldRun) {
-            log(
-              "info",
-              "[adaptor-bridge] Running prelaunch task: {{name}}",
-              { name: task.name },
-            );
-            // TODO: Actually spawn the process and wait for it.
-            // For now, log that we would run it. Full process
-            // spawning requires access to the main process tool
-            // runner, which is a separate integration point.
-          }
+      for (const task of tasks) {
+        let shouldRun = true;
+        if (task.conditional) {
+          shouldRun = (await callAdaptor(info.adaptorName, info.prelaunchUri, "shouldRun", [
+            info.paths,
+            task.id,
+          ])) as boolean;
         }
-      } catch (err) {
-        log(
-          "warn",
-          "[adaptor-bridge] Prelaunch tasks failed for {{gameId}}: {{error}}",
-          {
-            gameId,
-            error: err instanceof Error ? err.message : "Unknown error",
-          },
-        );
-      }
 
-      return input;
-    },
-  );
+        if (shouldRun) {
+          log("info", "[adaptor-bridge] Running prelaunch task: {{name}}", { name: task.name });
+          // TODO: Actually spawn the process and wait for it.
+          // For now, log that we would run it. Full process
+          // spawning requires access to the main process tool
+          // runner, which is a separate integration point.
+        }
+      }
+    } catch (err) {
+      log("warn", "[adaptor-bridge] Prelaunch tasks failed for {{gameId}}: {{error}}", {
+        gameId,
+        error: err instanceof Error ? err.message : "Unknown error",
+      });
+    }
+
+    return input;
+  });
 
   // Register all loaded adaptors synchronously during init so that
   // registerGame calls happen before endRegistration. The adaptor

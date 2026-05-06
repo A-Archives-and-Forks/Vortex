@@ -9,7 +9,7 @@
  * This is a host service (provided by Vortex), not an adaptor service.
  */
 
-import type { QualifiedPath } from "@vortex/fs";
+import type { QualifiedPath } from "../fs/paths";
 
 /**
  * Summary of a single installed mod visible to the adaptor.

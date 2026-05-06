@@ -81,10 +81,7 @@ export interface IGameLoadOrderService<T extends string = never> {
    * Returns the current state of a specific load order, including
    * entries in their current order and any sorting rules.
    */
-  getLoadOrderState(
-    paths: GamePaths<"game" | T>,
-    loadOrderId: string,
-  ): Promise<LoadOrderState>;
+  getLoadOrderState(paths: GamePaths<"game" | T>, loadOrderId: string): Promise<LoadOrderState>;
 
   /**
    * Persists a new entry order. Called when the user reorders entries
@@ -103,8 +100,5 @@ export interface IGameLoadOrderService<T extends string = never> {
    * writes to whatever format the game expects (INI, JSON, deploy
    * order, etc.) and resolves when done.
    */
-  serializeToDisk(
-    paths: GamePaths<"game" | T>,
-    loadOrderId: string,
-  ): Promise<void>;
+  serializeToDisk(paths: GamePaths<"game" | T>, loadOrderId: string): Promise<void>;
 }

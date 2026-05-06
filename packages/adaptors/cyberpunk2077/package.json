@@ -11,7 +11,9 @@
     "lint": "pnpm eslint --concurrency auto --quiet ."
   },
   "main": "./dist/index.mjs",
-  "vortex:requires": ["vortex:host/filesystem"],
+  "vortex:requires": [
+    "vortex:host/filesystem"
+  ],
   "peerDependencies": {
     "@nexusmods/adaptor-api": "workspace:*"
   }

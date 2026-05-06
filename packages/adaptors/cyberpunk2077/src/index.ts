@@ -13,6 +13,8 @@ import type { GamePaths, IGamePathService } from "@nexusmods/adaptor-api/contrac
 import { rehydrateGamePaths } from "@nexusmods/adaptor-api/contracts/game-paths";
 import type { IGameToolsService } from "@nexusmods/adaptor-api/contracts/game-tools";
 import { gameTools } from "@nexusmods/adaptor-api/contracts/game-tools";
+import { peHeader } from "@nexusmods/adaptor-api/contracts/game-version";
+import type { VersionSource } from "@nexusmods/adaptor-api/contracts/game-version";
 import type {
   IGameLoadOrderService,
   LoadOrderDefinition,
@@ -23,8 +25,6 @@ import type {
   IGamePrelaunchService,
   PrelaunchTask,
 } from "@nexusmods/adaptor-api/contracts/prelaunch";
-import { peHeader } from "@nexusmods/adaptor-api/contracts/game-version";
-import type { VersionSource } from "@nexusmods/adaptor-api/contracts/game-version";
 import type { FileSystem } from "@nexusmods/adaptor-api/fs";
 import { QualifiedPath, type RelativePath } from "@nexusmods/adaptor-api/fs";
 
@@ -199,8 +199,7 @@ const LOAD_ORDERS: LoadOrderDefinition[] = [
   {
     id: "archive",
     displayName: "Archive Load Order",
-    description:
-      "Controls the priority of .archive and .xl files in archive/pc/mod/.",
+    description: "Controls the priority of .archive and .xl files in archive/pc/mod/.",
   },
   {
     id: "redmod",
@@ -229,17 +228,12 @@ function getOrCreateState(loadOrderId: string): LoadOrderState {
 }
 
 @provides("vortex:adaptor/cyberpunk2077/load-order")
-export class GameLoadOrderService
-  implements IGameLoadOrderService<CyberpunkExtras>
-{
+export class GameLoadOrderService implements IGameLoadOrderService<CyberpunkExtras> {
   getLoadOrders(_paths: CyberpunkPaths): Promise<LoadOrderDefinition[]> {
     return Promise.resolve(LOAD_ORDERS);
   }
 
-  async getLoadOrderState(
-    paths: CyberpunkPaths,
-    loadOrderId: string,
-  ): Promise<LoadOrderState> {
+  async getLoadOrderState(paths: CyberpunkPaths, loadOrderId: string): Promise<LoadOrderState> {
     if (loadOrderId !== "archive") {
       return getOrCreateState(loadOrderId);
     }
@@ -286,9 +280,7 @@ export class GameLoadOrderService
     // then any remaining files in alphabetical order.
     const orderedFiles = [
       ...existingOrder.filter((f) => archiveFiles.includes(f)),
-      ...archiveFiles
-        .filter((f) => !existingOrder.includes(f))
-        .sort(),
+      ...archiveFiles.filter((f) => !existingOrder.includes(f)).sort(),
     ];
 
     const state = getOrCreateState(loadOrderId);
@@ -311,10 +303,7 @@ export class GameLoadOrderService
     return Promise.resolve(state);
   }
 
-  async serializeToDisk(
-    paths: CyberpunkPaths,
-    loadOrderId: string,
-  ): Promise<void> {
+  async serializeToDisk(paths: CyberpunkPaths, loadOrderId: string): Promise<void> {
     if (loadOrderId !== "archive") {
       // REDmod load order is alphabetical by folder name; no file to write.
       return;
@@ -327,9 +316,7 @@ export class GameLoadOrderService
 
     // Build the modlist.txt content from the current entry order.
     // Only include enabled entries. First entry = highest priority.
-    const lines = state.entries
-      .filter((e) => e.enabled)
-      .map((e) => e.id);
+    const lines = state.entries.filter((e) => e.enabled).map((e) => e.id);
 
     if (lines.length === 0) {
       // No entries: remove modlist.txt so the game falls back to
@@ -360,21 +347,14 @@ export class GameLoadOrderService
  * changed since the last run.
  */
 @provides("vortex:adaptor/cyberpunk2077/prelaunch")
-export class GamePrelaunchService
-  implements IGamePrelaunchService<CyberpunkExtras>
-{
+export class GamePrelaunchService implements IGamePrelaunchService<CyberpunkExtras> {
   getPrelaunchTasks(paths: CyberpunkPaths): Promise<PrelaunchTask[]> {
     const rehydrated = rehydrateGamePaths(paths);
     return Promise.resolve([
       {
         id: "redmod-deploy",
         name: "REDmod Deploy",
-        executable: rehydrated.game.join(
-          "tools",
-          "redmod",
-          "bin",
-          "redMod.exe",
-        ),
+        executable: rehydrated.game.join("tools", "redmod", "bin", "redMod.exe"),
         args: ["deploy"],
         conditional: true,
       },

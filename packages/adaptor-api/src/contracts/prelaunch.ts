@@ -6,8 +6,7 @@
  * failure. Tasks can be conditional (only run when the adaptor says so).
  */
 
-import type { QualifiedPath } from "@vortex/fs";
-
+import type { QualifiedPath } from "../fs/paths";
 import type { GamePaths } from "./game-paths.js";
 
 /**
