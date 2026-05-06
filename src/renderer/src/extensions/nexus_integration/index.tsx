@@ -18,13 +18,12 @@ import {
   getErrorMessageOrDefault,
   unknownToError,
 } from "@vortex/shared";
+import { DownloadIsHTML } from "@vortex/shared/errors";
 import PromiseBB from "bluebird";
-import { app } from "electron";
 import * as fuzz from "fuzzball";
 import * as path from "path";
 import * as React from "react";
 import { Button } from "react-bootstrap";
-import { toast } from "react-hot-toast";
 import {} from "uuid";
 
 import type { IDialogResult } from "../../actions/notifications";
@@ -51,7 +50,6 @@ import {
 } from "../../actions";
 import { showDialog } from "../../actions/notifications";
 import FlexLayout from "../../controls/FlexLayout";
-import Icon from "../../controls/Icon";
 import Image from "../../controls/Image";
 import LazyComponent from "../../controls/LazyComponent";
 import { getApplication } from "../../util/application";
@@ -84,30 +82,17 @@ import {
   Content,
   Campaign,
 } from "../../util/util";
-<<<<<<< HEAD
-
-import type { ICategoryDictionary } from "../category_management/types/ICategoryDictionary";
-import { DownloadIsHTML } from "@vortex/shared/errors";
-import type { IGameStored } from "../gamemode_management/types/IGameStored";
-import type { IMod, IModRepoId } from "../mod_management/types/IMod";
-
-import type { IDownload } from "../download_management/types/IDownload";
-import type { IResolvedURL } from "../download_management/types/ProtocolHandlers";
-=======
 import { MainContext } from "../../views/MainWindow";
-import { DownloadIsHTML } from "../download_management/DownloadManager";
->>>>>>> eddd5a47e (Merge pull request #23026 from Nexus-Mods/fix/app-419)
 import { SITE_ID } from "../gamemode_management/constants";
 import { getGame } from "../gamemode_management/util/getGame";
 import {
   isDownloadIdValid,
   isIdValid,
 } from "../mod_management/util/modUpdateState";
-import { setNewestVersion, setUserInfo } from "./actions/persistent";
+import { setNewestVersion } from "./actions/persistent";
 import {
   addFreeUserDLItem,
   removeFreeUserDLItem,
-  setOauthPending,
 } from "./actions/session";
 import { setAssociatedWithNXMURLs } from "./actions/settings";
 import {
@@ -145,41 +130,9 @@ import {
   requestLogin,
   retrieveNexusGames,
   startDownload,
-  updateKey,
   updateToken,
 } from "./util";
 import { checkModVersion } from "./util/checkModsVersion";
-<<<<<<< HEAD
-
-import type {
-  IDownloadURL,
-  IFileInfo,
-  IFileUpdate,
-  IModFile,
-  IModFileQuery,
-  IModInfo,
-  IRevision,
-  IRevisionQuery,
-  IValidateKeyResponse,
-} from "@nexusmods/nexus-api";
-import type NexusT from "@nexusmods/nexus-api";
-import { NexusError, RateLimitError, TimeoutError } from "@nexusmods/nexus-api";
-
-import PromiseBB from "bluebird";
-import * as fuzz from "fuzzball";
-import type { TFunction } from "i18next";
-import * as path from "path";
-import * as React from "react";
-import { Button } from "react-bootstrap";
-import type { Action } from "redux";
-import {} from "uuid";
-import type { IComponentContext } from "../../types/IComponentContext";
-import { MainContext } from "../../views/MainWindow";
-import { getGame } from "../gamemode_management/util/getGame";
-import { app } from "electron";
-import Icon from "../../controls/Icon";
-import { getErrorMessageOrDefault, unknownToError } from "@vortex/shared";
-=======
 import { convertNXMIdReverse, nexusGameId } from "./util/convertGameId";
 import {
   fillNexusIdByMD5,
@@ -194,7 +147,6 @@ import GoPremiumDashlet from "./views/GoPremiumDashlet";
 import LoginDialog from "./views/LoginDialog";
 import LoginIcon from "./views/LoginIcon";
 import {} from "./views/Settings";
->>>>>>> eddd5a47e (Merge pull request #23026 from Nexus-Mods/fix/app-419)
 
 let nexus: NexusT;
 let userInfoDebouncer: Debouncer;
