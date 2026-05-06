@@ -32,7 +32,7 @@ type CyberpunkExtras = "saves" | "preferences";
 type CyberpunkPaths = GamePaths<"game" | CyberpunkExtras>;
 
 function getFs(): FileSystem {
-  return getContainer().resolve("vortex:host/filesystem") as IFileSystem;
+  return getContainer().resolve("vortex:host/filesystem") as FileSystem;
 }
 
 const TEXT_ENCODER = new TextEncoder();
