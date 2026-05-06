@@ -43,7 +43,7 @@
             dotnetCorePackages.sdk_9_0
 
             # Electron (wrapped with GTK dependencies)
-            electron_41
+            electron_42
 
             # GTK dependencies for Electron runtime
             gtk3
