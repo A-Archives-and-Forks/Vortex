@@ -163,7 +163,6 @@ class MainWindow {
         if (details.reason !== "killed") {
           // workaround for electron issue #19887
           setImmediate(() => {
-            process.env.CRASH_REPORTING = Math.random() > 0.5 ? "vortex" : "electron";
             if (this.mWindow !== null) {
               this.mWindow
                 .loadURL(`file://${getVortexPath("base")}/index.html`)
