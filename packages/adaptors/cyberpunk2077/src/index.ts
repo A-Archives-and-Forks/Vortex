@@ -26,15 +26,15 @@ import type {
   IGamePrelaunchService,
   PrelaunchTask,
 } from "@nexusmods/adaptor-api/contracts/prelaunch";
-import type { StorePathProvider } from "@nexusmods/adaptor-api/stores/lib";
-import { Base } from "@nexusmods/adaptor-api/stores/lib";
-import type { IFileSystem } from "@vortex/fs";
-import { QualifiedPath, type RelativePath } from "@vortex/fs";
+import type { StorePathProvider } from "@nexusmods/adaptor-api";
+import { Base } from "@nexusmods/adaptor-api";
+import type { FileSystem } from "@nexusmods/adaptor-api/fs";
+import { QualifiedPath, type RelativePath } from "@nexusmods/adaptor-api/fs";
 
 type CyberpunkExtras = "saves" | "preferences";
 type CyberpunkPaths = GamePaths<"game" | CyberpunkExtras>;
 
-function getFs(): IFileSystem {
+function getFs(): FileSystem {
   return getContainer().resolve("vortex:host/filesystem") as IFileSystem;
 }
 
