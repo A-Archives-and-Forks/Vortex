@@ -16,12 +16,10 @@ import { NexusError, RateLimitError, TimeoutError } from "@nexusmods/nexus-api";
 import { getErrorMessageOrDefault, unknownToError } from "@vortex/shared";
 import { DownloadIsHTML } from "@vortex/shared/errors";
 import PromiseBB from "bluebird";
-import { app } from "electron";
 import * as fuzz from "fuzzball";
 import type { TFunction } from "i18next";
 import * as React from "react";
 import { Button } from "react-bootstrap";
-import { toast } from "react-hot-toast";
 import type { Action } from "redux";
 import {} from "uuid";
 
@@ -29,7 +27,6 @@ import { setDownloadModInfo, setForcedLogout, setModAttribute } from "../../acti
 import type { IDialogResult } from "../../actions/notifications";
 import { showDialog } from "../../actions/notifications";
 import FlexLayout from "../../controls/FlexLayout";
-import Icon from "../../controls/Icon";
 import Image from "../../controls/Image";
 import LazyComponent from "../../controls/LazyComponent";
 import type { IComponentContext } from "../../types/IComponentContext";
@@ -71,8 +68,8 @@ import type { IGameStored } from "../gamemode_management/types/IGameStored";
 import { getGame } from "../gamemode_management/util/getGame";
 import type { IMod, IModRepoId } from "../mod_management/types/IMod";
 import { isDownloadIdValid, isIdValid } from "../mod_management/util/modUpdateState";
-import { setNewestVersion, setUserInfo } from "./actions/persistent";
-import { addFreeUserDLItem, removeFreeUserDLItem, setOauthPending } from "./actions/session";
+import { setNewestVersion } from "./actions/persistent";
+import { addFreeUserDLItem, removeFreeUserDLItem } from "./actions/session";
 import { setAssociatedWithNXMURLs } from "./actions/settings";
 import {
   genCollectionIdAttribute,
@@ -111,7 +108,6 @@ import {
   requestLogin,
   retrieveNexusGames,
   startDownload,
-  updateKey,
   updateToken,
 } from "./util";
 import { checkModVersion } from "./util/checkModsVersion";
@@ -1067,13 +1063,21 @@ function extendAPI(api: IExtensionApi, nexus: NexusT): INexusAPIExtension {
 }
 
 function once(api: IExtensionApi, callbacks: Array<(nexus: NexusT) => void>) {
-  const registerFunc = (def?: boolean) => {
+  const registerFunc = async (def?: boolean) => {
     if (def === undefined) {
       api.store.dispatch(setAssociatedWithNXMURLs(true));
     }
 
     // main entry point for nxm protocol links to be handled
-    if (api.registerProtocol("nxm", def !== false, makeNXMLinkCallback(api))) {
+    // registerProtocol resolves to `true` only when Vortex was not already the
+    // default handler and we just registered it — only then do we want to
+    // notify the user about the change.
+    const didRegister: boolean = await api.registerProtocol(
+      "nxm",
+      def !== false,
+      void makeNXMLinkCallback(api),
+    );
+    if (didRegister) {
       api.sendNotification({
         type: "info",
         message: "Vortex will now handle Nexus Download links",
@@ -1273,13 +1277,14 @@ function toolbarBanner(t: TFunction): React.FunctionComponent<any> {
 
     return (
       <div id="nexus-header-ad">
-        <button onClick={trackAndGoToPremium} data-campaign={Content.HeaderAd}>
-          <FlexLayout type="row" className="ad-flex-container">
+        <button data-campaign={Content.HeaderAd} onClick={trackAndGoToPremium}>
+          <FlexLayout className="ad-flex-container" type="row">
             <FlexLayout.Flex>
-              <FlexLayout type="column" className="text-flex-container">
+              <FlexLayout className="text-flex-container" type="column">
                 <div className="nexus-header-ad-title">
                   Want <span className="ad-title-highlight">more time</span> playing?
                 </div>
+
                 <div className="nexus-header-ad-body">
                   Save time with <span className="ad-body-highlight">max download speeds</span>,{" "}
                   <span className="ad-body-highlight">auto-install collections</span>, and{" "}
@@ -1293,10 +1298,11 @@ function toolbarBanner(t: TFunction): React.FunctionComponent<any> {
             </FlexLayout.Fixed>
           </FlexLayout>
 
-          <FlexLayout type="row" className="custom-hover-overlay">
+          <FlexLayout className="custom-hover-overlay" type="row">
             <FlexLayout.Fixed>
-              <FlexLayout type="row" className="hover-overlay-content">
+              <FlexLayout className="hover-overlay-content" type="row">
                 {t("Go Premium")}
+
                 <div className="arrow-forward" />
               </FlexLayout>
             </FlexLayout.Fixed>
@@ -2056,12 +2062,14 @@ function init(context: IExtensionContext): boolean {
             AdBlock). Play your modded games{" "}
             <span className="text-highlight">faster with premium</span>.
           </div>
+
           <Button
-            id="get-premium-button"
             data-campaign={Content.DownloadsBannerAd}
+            id="get-premium-button"
             onClick={trackAndGoToPremium}
           >
             <Image srcs={[electricBoltIconPath]} />
+
             {t("Unlock max download speeds")}
           </Button>
         </div>
