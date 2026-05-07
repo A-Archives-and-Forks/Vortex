@@ -24,12 +24,18 @@
   },
   "nx": {
     "targets": {
-      "typecheck": {
+      "build": {
+        "executor": "nx:noop",
         "dependsOn": [
           {
             "target": "api",
             "projects": "@vortex/renderer"
           }
+        ]
+      },
+      "typecheck": {
+        "dependsOn": [
+          "build"
         ]
       }
     }
