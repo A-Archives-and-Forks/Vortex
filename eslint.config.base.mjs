@@ -8,7 +8,7 @@ import tseslint from "typescript-eslint";
 export const baseConfig = (tsconfigRootDir) =>
   defineConfig([
     {
-      ignores: ["node_modules/**", "dist/**", "out/**", "temp/**", "coverage/**"],
+      ignores: ["node_modules/**", "dist/**", "out/**", "temp/**", "coverage/**", "build/**"],
     },
 
     {

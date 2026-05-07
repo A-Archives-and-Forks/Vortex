@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "build": "node ./build.mjs",
-    "dist": "node ./build.mjs",
     "typecheck": "pnpm tsc",
     "lint": "pnpm eslint --concurrency auto --quiet ."
   },

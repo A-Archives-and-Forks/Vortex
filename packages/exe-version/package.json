@@ -7,7 +7,6 @@
   "type": "module",
   "scripts": {
     "build": "pnpm tsdown",
-    "dist": "pnpm tsdown",
     "typecheck": "pnpm tsc -p ./tsconfig.json",
     "test": "pnpm vitest run"
   },

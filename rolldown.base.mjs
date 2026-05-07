@@ -4,12 +4,7 @@ import { defineConfig } from "rolldown";
 
 export const mode = process.env.NODE_ENV === "production" ? "production" : "development";
 
-export const mainOutputDirectory = path.resolve(
-  import.meta.dirname,
-  "src",
-  "main",
-  mode === "production" ? "dist" : "out",
-);
+export const mainOutputDirectory = path.resolve(import.meta.dirname, "src", "main", "build");
 
 /**
  * @param {import("rolldown").InputOptions} input

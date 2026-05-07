@@ -27,7 +27,7 @@ export async function createTestHarness(
   bootstrapPath?: string,
 ): Promise<ITestHarness> {
   const resolvedBootstrap =
-    bootstrapPath ?? path.resolve(import.meta.dirname, "../../dist/bootstrap.mjs");
+    bootstrapPath ?? path.resolve(import.meta.dirname, "../../build/bootstrap.mjs");
 
   const handle = createNodeWorker(resolvedBootstrap);
   const transport = createRpcTransport(handle.worker);

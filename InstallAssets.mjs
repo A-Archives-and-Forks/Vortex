@@ -1,5 +1,5 @@
 import { mkdir, cp } from "node:fs/promises";
-import { join, dirname, basename } from "node:path";
+import { join, dirname } from "node:path";
 
 import { glob } from "glob";
 
@@ -18,7 +18,7 @@ let copies = -1;
 
 try {
   const promises = data.copy.map(async (file) => {
-    if (file.target.indexOf(basename(tgt)) === -1) {
+    if (file.devOnly && process.env.NODE_ENV === "production") {
       return;
     }
 

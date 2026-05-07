@@ -44,13 +44,10 @@ const isAsar = !isDevelopment && path.extname(basePath) === ".asar";
 const applicationPath = isDevelopment ? basePath : path.resolve(path.dirname(basePath), "..");
 
 if (isDevelopment) {
-  // In Electron 37, app.getAppPath() may already point to the 'out' directory
-  // Check if basePath already ends with 'out' to avoid double 'out/out'
-  if (path.basename(basePath) === "out") {
-    // basePath is already correct (points to out directory)
-    // Don't modify it
-  } else {
-    basePath = path.join(applicationPath, "out");
+  // In Electron 37, app.getAppPath() may already point to the 'build' directory
+  // Check if basePath already ends with 'build' to avoid double 'build/build'
+  if (path.basename(basePath) !== "build") {
+    basePath = path.join(applicationPath, "build");
   }
 }
 
