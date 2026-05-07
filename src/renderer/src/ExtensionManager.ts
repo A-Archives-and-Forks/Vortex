@@ -897,11 +897,10 @@ class ExtensionManager {
           // On Windows the previous renderer's file handles may not be
           // released yet. Subsequent relaunches will retry; a few failed
           // removes converging is preferable to silently looping forever.
-          log(
-            "warn",
-            "failed to remove outdated extension, will retry on next startup",
-            { name: ext, error: getErrorMessageOrDefault(err) },
-          );
+          log("warn", "failed to remove outdated extension, will retry on next startup", {
+            name: ext,
+            error: getErrorMessageOrDefault(err),
+          });
         }
         // Mark the extension state for removal so the next boot's
         // state-flagged-remove path (above) dispatches forgetExtension via
