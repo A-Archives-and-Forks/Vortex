@@ -3,6 +3,9 @@
   "defaultBase": "master",
   "neverConnectToCloud": true,
   "analytics": false,
+  "tui": {
+    "autoExit": true
+  },
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"]
