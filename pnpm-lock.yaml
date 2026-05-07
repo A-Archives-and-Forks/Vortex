@@ -3909,9 +3909,6 @@ importers:
       '@types/redux':
         specifier: 'catalog:'
         version: 3.6.0
-      '@vortex/renderer':
-        specifier: workspace:*
-        version: link:../../src/renderer
       date-fns:
         specifier: 'catalog:'
         version: 2.30.0
