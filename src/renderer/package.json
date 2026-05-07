@@ -14,9 +14,19 @@
   },
   "nx": {
     "targets": {
+      "build": {
+        "cache": false
+      },
+      "dist": {
+        "cache": false
+      },
       "api": {
         "dependsOn": [
           "^build"
+        ],
+        "cache": false,
+        "outputs": [
+          "{workspaceRoot}/packages/vortex-api/lib/api.d.ts"
         ]
       }
     }

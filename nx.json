@@ -6,12 +6,34 @@
   "tui": {
     "autoExit": true
   },
+  "namedInputs": {
+    "default": ["{projectRoot}/package.json", "{workspaceRoot}/pnpm-workspace.yaml"],
+    "typescript": [
+      "{projectRoot}/tsconfig*.json",
+      "{projectRoot}/build.mjs",
+      "{projectRoot}/tsdown.config.ts",
+      "{projectRoot}/src/**/*.ts",
+      "{projectRoot}/src/**/*.tsx"
+    ],
+    "vortex-api": [{ "dependentTasksOutputFiles": "packages/vortex-api/lib/api.d.ts" }]
+  },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "cache": true,
+      "inputs": [
+        "default",
+        "typescript",
+        "!{projectRoot}/src/**/*.test.ts",
+        "!{projectRoot}/src/**/*.test.tsx"
+      ],
+      "outputs": ["{projectRoot}/dist/"]
     },
     "typecheck": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "cache": true,
+      "inputs": ["default", "typescript"],
+      "outputs": ["{projectRoot}/tsconfig*.tsbuildinfo"]
     }
   }
 }

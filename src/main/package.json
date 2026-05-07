@@ -19,6 +19,22 @@
     "package:nosign": "node ./prepare-dist-package.mjs && pnpm install --dir=./build && pnpm electron-builder --config ./electron-builder.config.json --publish never",
     "prepare:win": "curl -L \"https://aka.ms/vs/17/release/vc_redist.x64.exe\" -o \"./temp/VC_redist.x64.exe\" --create-dirs && curl -L \"https://aka.ms/dotnet/9.0/windowsdesktop-runtime-win-x64.exe\" -o \"./temp/windowsdesktop-runtime-win-x64.exe\" --create-dirs"
   },
+  "nx": {
+    "targets": {
+      "start": {
+        "continuous": true,
+        "dependsOn": [
+          "build"
+        ]
+      },
+      "build": {
+        "cache": false
+      },
+      "dist": {
+        "cache": false
+      }
+    }
+  },
   "dependencies": {
     "@duckdb/node-api": "catalog:",
     "@electron/remote": "catalog:",

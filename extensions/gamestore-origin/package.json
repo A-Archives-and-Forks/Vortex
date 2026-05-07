@@ -28,6 +28,22 @@
   "nx": {
     "tags": [
       "extension"
-    ]
+    ],
+    "targets": {
+      "build": {
+        "inputs": [
+          "default",
+          "typescript",
+          "vortex-api"
+        ]
+      },
+      "typecheck": {
+        "inputs": [
+          "default",
+          "typescript",
+          "vortex-api"
+        ]
+      }
+    }
   }
 }

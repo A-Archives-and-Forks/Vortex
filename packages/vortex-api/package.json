@@ -31,12 +31,23 @@
             "target": "api",
             "projects": "@vortex/renderer"
           }
+        ],
+        "cache": false,
+        "outputs": [
+          "{projectRoot}/lib/api.d.ts"
         ]
       },
       "typecheck": {
         "dependsOn": [
           "build"
-        ]
+        ],
+        "cache": true,
+        "inputs": [
+          "default",
+          "{projectRoot}/lib/api.d.ts",
+          "{projectRoot}/tsconfig.lib.json"
+        ],
+        "outputs": []
       }
     }
   },
