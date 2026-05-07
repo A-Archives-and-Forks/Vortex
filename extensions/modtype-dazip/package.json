@@ -22,5 +22,10 @@
     "i18next": "catalog:",
     "semver": "catalog:",
     "vortex-api": "workspace:*"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

@@ -22,5 +22,10 @@
     "typescript": "catalog:",
     "vortex-api": "workspace:*",
     "winapi-bindings": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

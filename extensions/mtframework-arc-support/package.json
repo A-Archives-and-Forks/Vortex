@@ -25,5 +25,10 @@
     "react-i18next": "catalog:",
     "shortid": "catalog:",
     "vortex-api": "workspace:*"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

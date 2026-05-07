@@ -24,5 +24,10 @@
     "vortex-api": "workspace:*",
     "winapi-bindings": "catalog:",
     "xml2js": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

@@ -28,5 +28,10 @@
     "typescript": "catalog:",
     "vortex-api": "workspace:*",
     "vortex-parse-ini": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

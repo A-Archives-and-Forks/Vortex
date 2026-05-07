@@ -55,5 +55,10 @@
   },
   "optionalDependencies": {
     "loot": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

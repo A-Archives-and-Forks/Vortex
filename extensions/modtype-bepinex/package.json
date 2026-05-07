@@ -32,5 +32,10 @@
   },
   "dependencies": {
     "@iarna/toml": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

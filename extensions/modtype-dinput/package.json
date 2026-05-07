@@ -21,5 +21,10 @@
     "bluebird": "catalog:",
     "copyfiles": "catalog:",
     "vortex-api": "workspace:*"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

@@ -27,5 +27,10 @@
     "react": "catalog:",
     "react-i18next": "catalog:",
     "vortex-api": "workspace:*"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

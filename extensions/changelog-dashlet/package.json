@@ -32,5 +32,10 @@
     "redux-act": "catalog:",
     "semver": "catalog:",
     "vortex-api": "workspace:*"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

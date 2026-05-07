@@ -34,5 +34,10 @@
     "redux-act": "catalog:",
     "redux-thunk": "catalog:",
     "vortex-api": "workspace:*"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

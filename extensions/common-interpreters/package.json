@@ -21,5 +21,10 @@
     "typescript": "catalog:",
     "vortex-api": "workspace:*",
     "which": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

@@ -19,5 +19,10 @@
     "turbowalk": "catalog:",
     "typescript": "catalog:",
     "vortex-api": "workspace:*"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

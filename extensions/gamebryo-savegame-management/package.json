@@ -38,5 +38,10 @@
   },
   "dependencies": {
     "lz4js": "^0.2.0"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

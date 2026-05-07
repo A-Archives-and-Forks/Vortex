@@ -24,5 +24,10 @@
     "react-bootstrap": "catalog:",
     "turbowalk": "catalog:",
     "vortex-api": "workspace:*"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

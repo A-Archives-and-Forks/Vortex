@@ -29,5 +29,10 @@
   },
   "dependencies": {
     "semver": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

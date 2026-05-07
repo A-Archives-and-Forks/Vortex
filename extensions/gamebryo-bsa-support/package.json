@@ -28,5 +28,10 @@
     "rimraf": "catalog:",
     "tmp": "catalog:",
     "vortex-api": "workspace:*"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }

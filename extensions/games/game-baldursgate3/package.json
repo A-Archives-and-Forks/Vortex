@@ -21,5 +21,10 @@
   },
   "dependencies": {
     "lru-cache": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "extension"
+    ]
   }
 }
