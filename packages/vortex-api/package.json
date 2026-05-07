@@ -20,6 +20,7 @@
     "bin"
   ],
   "scripts": {
+    "build": "pnpm -F @vortex/renderer run api:build && pnpm -F @vortex/renderer run api:docs",
     "typecheck": "pnpm tsc -p tsconfig.lib.json"
   },
   "devDependencies": {
