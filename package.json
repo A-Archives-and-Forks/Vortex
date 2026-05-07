@@ -74,6 +74,7 @@
     "husky": "catalog:",
     "lint-staged": "catalog:",
     "minimist": "catalog:",
+    "nx": "catalog:",
     "oxfmt": "catalog:",
     "p-limit": "catalog:",
     "rimraf": "catalog:",

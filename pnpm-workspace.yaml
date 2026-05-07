@@ -23,6 +23,7 @@ allowBuilds:
   gamebryo-savegame: true
   leveldown: true
   loot: true
+  nx: false
   protobufjs: true
   unrs-resolver: true
   winapi-bindings: true
@@ -208,6 +209,7 @@ catalog:
   node-7z: git+https://github.com/Nexus-Mods/node-7z#b75def8d0d7d81a03f4526c52b8ada9a34a06479
   normalize-url: ^6.0.1
   numeral: ^2.0.6
+  nx: ^22.7.1
   oxfmt: ^0.41.0
   p-limit: ^7.3.0
   p-queue: ^9.1.0
