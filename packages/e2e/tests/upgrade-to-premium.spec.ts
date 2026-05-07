@@ -18,9 +18,7 @@ test.describe("Account - Upgrade to Premium", () => {
 
     await test.step("Wait for userInfo and force Dashboard re-render", async () => {
       await vortexWindow.keyboard.press("Escape").catch(() => undefined);
-      const headerGoPremium = vortexWindow
-        .getByRole("button", { name: /Go premium/i })
-        .first();
+      const headerGoPremium = vortexWindow.getByRole("button", { name: /Go premium/i }).first();
       await expect(headerGoPremium).toBeVisible({ timeout: 60_000 });
 
       const navbar = new NavBar(vortexWindow);
@@ -47,9 +45,7 @@ test.describe("Account - Upgrade to Premium", () => {
 
     await test.step("Verify the captured URL points to the premium page", async () => {
       const captured = await vortexApp.evaluate(
-        () =>
-          (global as unknown as { __capturedOpenUrls?: string[] })
-            .__capturedOpenUrls ?? [],
+        () => (global as unknown as { __capturedOpenUrls?: string[] }).__capturedOpenUrls ?? [],
       );
       expect(captured.length).toBeGreaterThan(0);
 
