@@ -36,7 +36,7 @@ const extensionArg = process.argv[2];
 const target = process.argv[3] ?? process.argv[2];
 
 let extension;
-if (extensionArg && extensionArg !== "out" && extensionArg !== "dist") {
+if (extensionArg && extensionArg !== "out" && extensionArg !== "dist" && extensionArg !== "build") {
   // Explicit extension name passed
   extension = extensionArg;
 } else {
@@ -56,8 +56,8 @@ if (extensionArg && extensionArg !== "out" && extensionArg !== "dist") {
   extension = rel.split(path.sep).slice(0, 2).join(path.sep);
 }
 
-if (!target || (target !== "out" && target !== "dist")) {
-  console.error("Error: target is required (out or dist)");
+if (!target || (target !== "out" && target !== "dist" && target !== "build")) {
+  console.error("Error: target is required (out, dist, or build)");
   console.error("Usage: node copy-extension.mjs [extension] <target>");
   process.exit(1);
 }
