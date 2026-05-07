@@ -10,7 +10,7 @@ const BUNDLE_PATH = path.resolve(
   import.meta.dirname,
   "../../../../packages/adaptors/ping-test/dist/index.mjs",
 );
-const BOOTSTRAP_PATH = path.resolve(import.meta.dirname, "../../out/bootstrap.mjs");
+const BOOTSTRAP_PATH = path.resolve(import.meta.dirname, "../../build/bootstrap.mjs");
 
 describe("adaptor host integration (Worker)", () => {
   let host: IAdaptorHost;

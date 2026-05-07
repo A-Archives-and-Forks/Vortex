@@ -20,7 +20,7 @@
  * should not be wired into CI as-is.
  *
  * Prerequisites: `pnpm build` must have produced
- *   src/main/out/bootstrap.mjs
+ *   src/main/build/bootstrap.mjs
  *   packages/adaptors/<name>/dist/index.mjs
  * The CLI fails fast with a clear message if either is missing.
  */

@@ -30,7 +30,7 @@ const BUNDLE_PATH = path.resolve(
   import.meta.dirname,
   "../../../../packages/adaptors/fs-test/dist/index.mjs",
 );
-const BOOTSTRAP_PATH = path.resolve(import.meta.dirname, "../../out/bootstrap.mjs");
+const BOOTSTRAP_PATH = path.resolve(import.meta.dirname, "../../build/bootstrap.mjs");
 
 const PROBE_URI = "vortex:adaptor/fs-test/probe";
 
