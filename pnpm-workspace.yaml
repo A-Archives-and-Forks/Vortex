@@ -15,7 +15,7 @@ allowBuilds:
   "@parcel/watcher": true
   bsatk: true
   core-js: true
-  crash-dump: true
+
   drivelist: true
   electron: true
   esbuild: true
@@ -23,6 +23,7 @@ allowBuilds:
   gamebryo-savegame: true
   leveldown: true
   loot: true
+  nx: false
   protobufjs: true
   unrs-resolver: true
   winapi-bindings: true
@@ -136,7 +137,7 @@ catalog:
   content-disposition: ^0.5.3
   content-type: ^1.0.4
   copyfiles: ^2.4.1
-  crash-dump: git+https://github.com/Nexus-Mods/node-crash-dump#7fc76dabdc9117a7f238d7bf5e5fb7841a374804
+
   crc-32: ^1.2.1
   cross-env: ^10.1.0
   cross-fetch: ^3.1.5
@@ -203,6 +204,7 @@ catalog:
   node-7z: git+https://github.com/Nexus-Mods/node-7z#b75def8d0d7d81a03f4526c52b8ada9a34a06479
   normalize-url: ^6.0.1
   numeral: ^2.0.6
+  nx: ^22.7.1
   oxfmt: ^0.41.0
   p-limit: ^7.3.0
   p-queue: ^9.1.0

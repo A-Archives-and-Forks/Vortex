@@ -62,7 +62,6 @@ import { getErrorCode, getErrorMessageOrDefault, unknownToError } from "@vortex/
 import type { IParameters } from "@vortex/shared/cli";
 import type { AppInitMetadata } from "@vortex/shared/ipc";
 import Bluebird from "bluebird";
-import type crashDumpT from "crash-dump";
 import { ipcRenderer, webFrame } from "electron";
 import React from "react";
 
@@ -116,15 +115,6 @@ import { AppLayout } from "./views/AppLayout";
 import LoadingScreen from "./views/LoadingScreen";
 
 log("debug", "renderer process started", { pid: process["pid"] });
-
-let deinitCrashDump: () => void;
-
-if (process.env.CRASH_REPORTING === "vortex") {
-  void window.api.app.getPath("temp").then((tempPath: string) => {
-    const crashDump: typeof crashDumpT = require("crash-dump").default;
-    deinitCrashDump = crashDump(path.join(tempPath, "dumps", `crash-renderer-${Date.now()}.dmp`));
-  });
-}
 
 // on windows, copy systemCode to nativeCode so downstream error handling
 // can read a consistent property name
@@ -393,12 +383,6 @@ window.addEventListener("error", errorHandler);
 window.addEventListener("unhandledrejection", errorHandler);
 window.removeEventListener("error", earlyErrHandler);
 window.removeEventListener("unhandledrejection", earlyErrHandler);
-window.addEventListener("close", () => {
-  if (deinitCrashDump !== undefined) {
-    deinitCrashDump();
-  }
-});
-
 const eventEmitter: NodeJS.EventEmitter = new EventEmitter();
 
 let enhancer = null;

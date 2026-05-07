@@ -63,6 +63,9 @@ for (const requiresUri of config.requires) {
   container;
 const context = vm.createContext({
   __vortex_service_container: container,
+  // Expose standard globals that vm.createContext does not include.
+  TextEncoder,
+  TextDecoder,
 });
 
 const bundleModule = new vm.SourceTextModule(bundle, { context });
