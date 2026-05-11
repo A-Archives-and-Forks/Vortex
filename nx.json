@@ -42,7 +42,7 @@
       "inputs": ["default", "typescript"],
       "outputs": []
     },
-    "lint:quiet": {
+    "lint:verbose": {
       "dependsOn": ["^build"],
       "cache": true,
       "inputs": ["default", "typescript"],
