@@ -1,5 +1,4 @@
 import type { IPersistor, PersistorKey } from "@vortex/shared/state";
-
 import { describe, it, expect, vi } from "vitest";
 
 import SubPersistor from "./SubPersistor";
@@ -109,7 +108,10 @@ describe("SubPersistor.bulkRemoveItem", () => {
     const { wrapped, bulkRemoveItem } = createWrappedWithBulk();
     const sub = new SubPersistor(wrapped, "app");
 
-    await sub.bulkRemoveItem([["extensions", "a"], ["extensions", "b"]]);
+    await sub.bulkRemoveItem([
+      ["extensions", "a"],
+      ["extensions", "b"],
+    ]);
 
     expect(bulkRemoveItem).toHaveBeenCalledTimes(1);
     expect(bulkRemoveItem).toHaveBeenCalledWith([

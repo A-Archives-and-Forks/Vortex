@@ -1,11 +1,9 @@
 import type { DuckDBConnection } from "@duckdb/node-api";
-
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
 vi.mock("../logging", () => ({ log: vi.fn() }));
 
 import { log } from "../logging";
-
 import LevelPersist from "./LevelPersist";
 
 const SEPARATOR = "###";
@@ -19,10 +17,7 @@ function createMockConnection() {
 
 function createPersist() {
   const connection = createMockConnection();
-  const persist = new LevelPersist(
-    connection as unknown as DuckDBConnection,
-    "db",
-  );
+  const persist = new LevelPersist(connection as unknown as DuckDBConnection, "db");
   return { persist, connection };
 }
 
@@ -34,10 +29,10 @@ describe("LevelPersist.setItem", () => {
 
     expect(connection.runAndReadAll).not.toHaveBeenCalled();
     expect(connection.run).toHaveBeenCalledTimes(1);
-    expect(connection.run).toHaveBeenCalledWith(
-      "INSERT INTO db.kv VALUES ($1, $2)",
-      [`settings${SEPARATOR}window${SEPARATOR}x`, "42"],
-    );
+    expect(connection.run).toHaveBeenCalledWith("INSERT INTO db.kv VALUES ($1, $2)", [
+      `settings${SEPARATOR}window${SEPARATOR}x`,
+      "42",
+    ]);
   });
 
   it("does not begin or commit a transaction internally", async () => {
@@ -65,10 +60,9 @@ describe("LevelPersist.removeItem", () => {
     await persist.removeItem(["settings", "window", "x"]);
 
     expect(connection.run).toHaveBeenCalledTimes(1);
-    expect(connection.run).toHaveBeenCalledWith(
-      "DELETE FROM db.kv WHERE key = $1",
-      [`settings${SEPARATOR}window${SEPARATOR}x`],
-    );
+    expect(connection.run).toHaveBeenCalledWith("DELETE FROM db.kv WHERE key = $1", [
+      `settings${SEPARATOR}window${SEPARATOR}x`,
+    ]);
   });
 });
 
@@ -92,18 +86,14 @@ describe("LevelPersist.bulkSetItem", () => {
 
     expect(connection.run).toHaveBeenCalledTimes(1);
     const [sql, params] = connection.run.mock.calls[0];
-    expect(sql).toBe(
-      "INSERT INTO db.kv VALUES ($1, $2), ($3, $4), ($5, $6)",
-    );
+    expect(sql).toBe("INSERT INTO db.kv VALUES ($1, $2), ($3, $4), ($5, $6)");
     expect(params).toEqual(["a", "1", "b", "2", "c", "3"]);
   });
 
   it("joins compound key paths with the separator", async () => {
     const { persist, connection } = createPersist();
 
-    await persist.bulkSetItem([
-      { key: ["settings", "window", "x"], value: "42" },
-    ]);
+    await persist.bulkSetItem([{ key: ["settings", "window", "x"], value: "42" }]);
 
     const params = connection.run.mock.calls[0][1] as string[];
     expect(params[0]).toBe(`settings${SEPARATOR}window${SEPARATOR}x`);
