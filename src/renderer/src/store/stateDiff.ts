@@ -59,9 +59,7 @@ export function computeStateDiff<T>(
         // container-path remove already covers it.
         operations.push({ type: "remove", path: currentPath });
         if (isObject(oldState[key])) {
-          operations.push(
-            ...collectRemoveOperations(currentPath, oldState[key]),
-          );
+          operations.push(...collectRemoveOperations(currentPath, oldState[key]));
         }
       } else if (oldState[key] !== newState[key]) {
         // Key exists in both but value changed - recurse

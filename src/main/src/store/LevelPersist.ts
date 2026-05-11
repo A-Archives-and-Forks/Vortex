@@ -313,10 +313,7 @@ class LevelPersist implements IPersistor {
       params.push(key, `${key}${SEPARATOR}`);
     }
     await this.timedWrite("bulkRemoveItem", keys.length, () =>
-      this.#mConnection.run(
-        `DELETE FROM ${this.#mAlias}.kv WHERE ${clauses.join(" OR ")}`,
-        params,
-      ),
+      this.#mConnection.run(`DELETE FROM ${this.#mAlias}.kv WHERE ${clauses.join(" OR ")}`, params),
     );
   }
 
