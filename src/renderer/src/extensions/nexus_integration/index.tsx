@@ -1075,7 +1075,7 @@ function once(api: IExtensionApi, callbacks: Array<(nexus: NexusT) => void>) {
     const didRegister: boolean = await api.registerProtocol(
       "nxm",
       def !== false,
-      void makeNXMLinkCallback(api),
+      makeNXMLinkCallback(api),
     );
     if (didRegister) {
       api.sendNotification({
