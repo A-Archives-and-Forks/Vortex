@@ -14,7 +14,7 @@
   },
   "scripts": {
     "prepare": "husky",
-    "preinstall": "npx only-allow pnpm",
+    "preinstall": "npx only-allow pnpm && node ./scripts/create-env-file.mjs",
     "start": "pnpm -F @vortex/main run start",
     "build": "pnpm nx run-many -t build lint:quiet typecheck && pnpm run assets",
     "dist": "pnpm run build && pnpm --filter \"./src/*\" -r run dist",
