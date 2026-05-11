@@ -26,12 +26,6 @@
         "dependsOn": [
           "build"
         ]
-      },
-      "build": {
-        "cache": false
-      },
-      "dist": {
-        "cache": false
       }
     }
   },

@@ -14,12 +14,6 @@
   },
   "nx": {
     "targets": {
-      "build": {
-        "cache": false
-      },
-      "dist": {
-        "cache": false
-      },
       "api": {
         "dependsOn": [
           "^build"
