@@ -1,10 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import {
-  computeErrorFingerprint,
-  isEnvironmentalError,
-  sanitizeFramePath,
-} from "./errors";
+import { computeErrorFingerprint, isEnvironmentalError, sanitizeFramePath } from "./errors";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -328,17 +324,13 @@ describe("computeErrorFingerprint", () => {
     it("ignores column differences within the same line", () => {
       const a = stack(`at f (src/foo.ts:42:10)`);
       const b = stack(`at f (src/foo.ts:42:99)`);
-      expect(computeErrorFingerprint(a, VERSION)).toBe(
-        computeErrorFingerprint(b, VERSION),
-      );
+      expect(computeErrorFingerprint(a, VERSION)).toBe(computeErrorFingerprint(b, VERSION));
     });
 
     it("strips column from frames without parentheses (`at path:line:col`)", () => {
       const a = stack(`at app.asar/renderer.js:2:989340`);
       const b = stack(`at app.asar/renderer.js:2:1054550`);
-      expect(computeErrorFingerprint(a, VERSION)).toBe(
-        computeErrorFingerprint(b, VERSION),
-      );
+      expect(computeErrorFingerprint(a, VERSION)).toBe(computeErrorFingerprint(b, VERSION));
     });
 
     it("hashes only the innermost N frames (calling context above is ignored)", () => {
@@ -350,25 +342,15 @@ describe("computeErrorFingerprint", () => {
         `at app.asar/renderer.js:2:989340`,
         `at Array.reduce (<anonymous>)`,
       ];
-      const a = stack(
-        ...top5,
-        `at getCurrentActivator (app.asar/renderer.js:2:1661103)`,
-      );
-      const b = stack(
-        ...top5,
-        `at getSupportedActivators (app.asar/renderer.js:2:1660629)`,
-      );
-      expect(computeErrorFingerprint(a, VERSION)).toBe(
-        computeErrorFingerprint(b, VERSION),
-      );
+      const a = stack(...top5, `at getCurrentActivator (app.asar/renderer.js:2:1661103)`);
+      const b = stack(...top5, `at getSupportedActivators (app.asar/renderer.js:2:1660629)`);
+      expect(computeErrorFingerprint(a, VERSION)).toBe(computeErrorFingerprint(b, VERSION));
     });
 
     it("still differentiates when innermost frames differ", () => {
       const a = stack(`at f (src/foo.ts:1:2)`, `at g (src/bar.ts:3:4)`);
       const b = stack(`at h (src/baz.ts:1:2)`, `at g (src/bar.ts:3:4)`);
-      expect(computeErrorFingerprint(a, VERSION)).not.toBe(
-        computeErrorFingerprint(b, VERSION),
-      );
+      expect(computeErrorFingerprint(a, VERSION)).not.toBe(computeErrorFingerprint(b, VERSION));
     });
   });
 });
@@ -378,15 +360,11 @@ describe("computeErrorFingerprint", () => {
 // ---------------------------------------------------------------------------
 
 describe("isEnvironmentalError", () => {
-  const withCode = (code: string): Error =>
-    Object.assign(new Error(code), { code });
+  const withCode = (code: string): Error => Object.assign(new Error(code), { code });
 
-  it.each(["EPERM", "EACCES", "ENOSPC", "EROFS"])(
-    "returns true for %s",
-    (code) => {
-      expect(isEnvironmentalError(withCode(code))).toBe(true);
-    },
-  );
+  it.each(["EPERM", "EACCES", "ENOSPC", "EROFS"])("returns true for %s", (code) => {
+    expect(isEnvironmentalError(withCode(code))).toBe(true);
+  });
 
   it("returns false for unrelated error codes", () => {
     expect(isEnvironmentalError(withCode("ENOENT"))).toBe(false);

@@ -1,19 +1,8 @@
 import * as path from "path";
 import { inspect } from "util";
 
-<<<<<<< HEAD
 import { type Span, context, ROOT_CONTEXT, SpanStatusCode, trace } from "@opentelemetry/api";
-import { unknownToError } from "@vortex/shared";
-=======
-import {
-  type Span,
-  context,
-  ROOT_CONTEXT,
-  SpanStatusCode,
-  trace,
-} from "@opentelemetry/api";
 import { isEnvironmentalError, unknownToError } from "@vortex/shared";
->>>>>>> 586b3ab54 (Merge pull request #23059 from Nexus-Mods/task/APP-435)
 import { recordErrorOnSpan } from "@vortex/shared/telemetry";
 import type PromiseBB from "bluebird";
 import type { BrowserWindow } from "electron";
