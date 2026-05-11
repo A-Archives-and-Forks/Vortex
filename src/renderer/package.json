@@ -18,7 +18,12 @@
         "dependsOn": [
           "^build"
         ],
-        "cache": false,
+        "cache": true,
+        "inputs": [
+          "default",
+          "typescript",
+          "{projectRoot}/api-extractor.json"
+        ],
         "outputs": [
           "{workspaceRoot}/packages/vortex-api/lib/api.d.ts"
         ]
