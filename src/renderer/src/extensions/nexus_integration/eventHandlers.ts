@@ -23,12 +23,8 @@ import type {
 } from "@nexusmods/nexus-api";
 import type Nexus from "@nexusmods/nexus-api";
 import { NexusError, RateLimitError, TimeoutError } from "@nexusmods/nexus-api";
-<<<<<<< HEAD
-import { getErrorCode, getErrorMessageOrDefault, unknownToError } from "@vortex/shared";
-import { AlreadyDownloaded, DownloadIsHTML } from "@vortex/shared/errors";
-=======
 import { getErrorMessageOrDefault, unknownToError } from "@vortex/shared";
->>>>>>> f7b69bd43 (Merge pull request #23101 from Nexus-Mods/fix/app-443)
+import { AlreadyDownloaded, DownloadIsHTML } from "@vortex/shared/errors";
 import Bluebird from "bluebird";
 import * as semver from "semver";
 
@@ -670,25 +666,14 @@ export function onGetNexusCollection(
 export function onGetNexusCollections(
   api: IExtensionApi,
   nexus: Nexus,
-<<<<<<< HEAD
-): (gameId: string) => Bluebird<ICollection[]> {
-  return (gameId: string): Bluebird<ICollection[]> =>
-    Bluebird.resolve(nexus.getCollectionListGraph(FULL_COLLECTION_INFO, gameId)).catch((err) => {
-      api.showErrorNotification("Failed to get list of collections", err);
-      return Bluebird.resolve(undefined);
-    });
-=======
 ): (gameId: string) => Bluebird<Partial<ICollection>[] | undefined> {
   return (gameId: string) =>
-    Bluebird.resolve(
-      nexus.getCollectionListGraph(FULL_COLLECTION_INFO, gameId),
-    ).catch((err) =>
+    Bluebird.resolve(nexus.getCollectionListGraph(FULL_COLLECTION_INFO, gameId)).catch((err) =>
       handleGraphError<Partial<ICollection>[] | undefined>(api, err, {
         title: "Failed to get list of collections",
         fallback: undefined,
       }),
     );
->>>>>>> f7b69bd43 (Merge pull request #23101 from Nexus-Mods/fix/app-443)
 }
 
 /**
@@ -868,24 +853,13 @@ export function onModFileContents(
     offset?: number,
     count?: number,
   ) => {
-<<<<<<< HEAD
-    return Bluebird.resolve(nexus.modFileContents(query, filter, offset, count)).catch((err) => {
-      api.showErrorNotification("Failed to get mod file contents", err, {
-        allowReport: false,
-      });
-      return Bluebird.resolve({});
-    });
-=======
-    return Bluebird.resolve(
-      nexus.modFileContents(query, filter, offset, count),
-    ).catch((err) =>
+    return Bluebird.resolve(nexus.modFileContents(query, filter, offset, count)).catch((err) =>
       handleGraphError(api, err, {
         title: "Failed to get mod file contents",
         fallback: {},
         doNotReport: true,
       }),
     );
->>>>>>> f7b69bd43 (Merge pull request #23101 from Nexus-Mods/fix/app-443)
   };
 }
 
@@ -899,24 +873,13 @@ export function onGetModInfo(
   return (gameId: string, modId: number) => {
     const state = api.getState();
     const game = gameById(state, gameId);
-<<<<<<< HEAD
     return Bluebird.resolve(nexus.getModInfo(modId, nexusGameId(game, gameId) || gameId)).catch(
-      (err) => {
-        api.showErrorNotification("Failed to get mod info", err, {
-          allowReport: false,
-        });
-        return Bluebird.resolve({});
-      },
-=======
-    return Bluebird.resolve(
-      nexus.getModInfo(modId, nexusGameId(game, gameId) || gameId),
-    ).catch((err) =>
-      handleGraphError(api, err, {
-        title: "Failed to get mod info",
-        fallback: {},
-        doNotReport: true,
-      }),
->>>>>>> f7b69bd43 (Merge pull request #23101 from Nexus-Mods/fix/app-443)
+      (err) =>
+        handleGraphError(api, err, {
+          title: "Failed to get mod info",
+          fallback: {},
+          doNotReport: true,
+        }),
     );
   };
 }

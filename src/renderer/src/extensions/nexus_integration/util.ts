@@ -21,27 +21,14 @@ import type {
   IModFileQuery,
 } from "@nexusmods/nexus-api";
 import type Nexus from "@nexusmods/nexus-api";
-<<<<<<< HEAD
 import { GraphError, NexusError, RateLimitError, TimeoutError } from "@nexusmods/nexus-api";
-import { getErrorMessageOrDefault, unknownToError } from "@vortex/shared";
-import { AlreadyDownloaded, DownloadIsHTML } from "@vortex/shared/errors";
-=======
-import type { TFunction } from "i18next";
-import type * as Redux from "redux";
-
-import {
-  GraphError,
-  NexusError,
-  RateLimitError,
-  TimeoutError,
-} from "@nexusmods/nexus-api";
 import {
   getErrorCode,
   getErrorMessage,
   getErrorMessageOrDefault,
   unknownToError,
 } from "@vortex/shared";
->>>>>>> f7b69bd43 (Merge pull request #23101 from Nexus-Mods/fix/app-443)
+import { AlreadyDownloaded, DownloadIsHTML } from "@vortex/shared/errors";
 import BluebirdPromise from "bluebird";
 import type { TFunction } from "i18next";
 import jwt from "jsonwebtoken";
@@ -1087,9 +1074,6 @@ export function graphErrorContext(err: unknown): Record<string, unknown> {
   return ctx;
 }
 
-<<<<<<< HEAD
-export function resolveGraphError(t: TFunction, isLoggedIn: boolean, err: Error): string {
-=======
 export interface IHandleGraphErrorOptions<T> {
   // Notification title shown to the user when the error isn't skipped.
   title: string;
@@ -1129,8 +1113,7 @@ export function handleGraphError<T>(
   if (code !== undefined && (opts.skipCodes?.includes(code) ?? false)) {
     return opts.fallback;
   }
-  const noReport =
-    code !== undefined && (opts.noReportCodes?.includes(code) ?? false);
+  const noReport = code !== undefined && (opts.noReportCodes?.includes(code) ?? false);
   const allowReport = (opts.allowReport ?? true) && !noReport;
   if (Object.keys(ctx).length > 0) {
     log("warn", opts.title, ctx);
@@ -1143,12 +1126,7 @@ export function handleGraphError<T>(
   return opts.fallback;
 }
 
-export function resolveGraphError(
-  t: TFunction,
-  isLoggedIn: boolean,
-  err: Error,
-): string {
->>>>>>> f7b69bd43 (Merge pull request #23101 from Nexus-Mods/fix/app-443)
+export function resolveGraphError(t: TFunction, isLoggedIn: boolean, err: Error): string {
   if (err.message === "You must provide a version") {
     // is this still reported in this way?
     return t("You can't endorse a mod that has no version set.");
