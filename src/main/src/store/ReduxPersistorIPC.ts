@@ -262,11 +262,6 @@ class ReduxPersistorIPC {
    * Walk the operation list, grouping consecutive same-type ops into runs
    * and dispatching each run to the bulk path when available.
    */
-<<<<<<< HEAD
-  private applyOperation(persistor: IPersistor, operation: DiffOperation): Promise<void> {
-    if (operation.type === "set") {
-      return Promise.resolve(persistor.setItem(operation.path, this.serialize(operation.value)));
-=======
   private async applyOperationsInRuns(
     persistor: IPersistor,
     operations: DiffOperation[],
@@ -275,10 +270,7 @@ class ReduxPersistorIPC {
     while (i < operations.length) {
       const opType = operations[i].type;
       let runEnd = i + 1;
-      while (
-        runEnd < operations.length &&
-        operations[runEnd].type === opType
-      ) {
+      while (runEnd < operations.length && operations[runEnd].type === opType) {
         runEnd++;
       }
       const run = operations.slice(i, runEnd);
@@ -291,17 +283,10 @@ class ReduxPersistorIPC {
     }
   }
 
-  private async applySetRun(
-    persistor: IPersistor,
-    run: DiffOperation[],
-  ): Promise<void> {
+  private async applySetRun(persistor: IPersistor, run: DiffOperation[]): Promise<void> {
     if (persistor.bulkSetItem !== undefined) {
       const bulk = persistor.bulkSetItem.bind(persistor);
-      for (
-        let start = 0;
-        start < run.length;
-        start += ReduxPersistorIPC.BULK_CHUNK_SIZE
-      ) {
+      for (let start = 0; start < run.length; start += ReduxPersistorIPC.BULK_CHUNK_SIZE) {
         const chunk = run.slice(start, start + ReduxPersistorIPC.BULK_CHUNK_SIZE);
         await bulk(
           chunk.map((op) => ({
@@ -310,7 +295,6 @@ class ReduxPersistorIPC {
           })),
         );
       }
->>>>>>> 93e8868dc (Merge pull request #23049 from Nexus-Mods/fix/app-429)
     } else {
       for (const op of run) {
         await persistor.setItem(op.path, this.serialize(op.value));
@@ -318,17 +302,10 @@ class ReduxPersistorIPC {
     }
   }
 
-  private async applyRemoveRun(
-    persistor: IPersistor,
-    run: DiffOperation[],
-  ): Promise<void> {
+  private async applyRemoveRun(persistor: IPersistor, run: DiffOperation[]): Promise<void> {
     if (persistor.bulkRemoveItem !== undefined) {
       const bulk = persistor.bulkRemoveItem.bind(persistor);
-      for (
-        let start = 0;
-        start < run.length;
-        start += ReduxPersistorIPC.BULK_CHUNK_SIZE
-      ) {
+      for (let start = 0; start < run.length; start += ReduxPersistorIPC.BULK_CHUNK_SIZE) {
         const chunk = run.slice(start, start + ReduxPersistorIPC.BULK_CHUNK_SIZE);
         await bulk(chunk.map((op) => op.path));
       }

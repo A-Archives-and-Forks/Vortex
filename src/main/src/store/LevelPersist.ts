@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import * as path from "node:path";
 
 import type { DuckDBConnection } from "@duckdb/node-api";
@@ -6,15 +5,6 @@ import { unknownToError } from "@vortex/shared";
 import { DataInvalid } from "@vortex/shared/errors";
 import type { IPersistor } from "@vortex/shared/state";
 
-=======
-import type { DuckDBConnection } from "@duckdb/node-api";
-import type { IPersistor } from "@vortex/shared/state";
-
-import { unknownToError } from "@vortex/shared";
-import { DataInvalid } from "@vortex/shared/errors";
-import * as path from "node:path";
-
->>>>>>> 93e8868dc (Merge pull request #23049 from Nexus-Mods/fix/app-429)
 import { getVortexPath } from "../getVortexPath";
 import { log } from "../logging";
 import DuckDBSingleton from "./DuckDBSingleton";
@@ -143,11 +133,7 @@ class LevelPersist implements IPersistor {
   // line before the await and an exit line after - so an indefinite hang
   // (where the exit line never appears in vortex.log) pinpoints the
   // wedged call.
-  private async timedWrite<T>(
-    method: string,
-    count: number,
-    op: () => Promise<T>,
-  ): Promise<T> {
+  private async timedWrite<T>(method: string, count: number, op: () => Promise<T>): Promise<T> {
     const trace = traceWritesEnabled();
     const start = Date.now();
     if (trace) {
@@ -242,51 +228,6 @@ class LevelPersist implements IPersistor {
   }
 
   public async setItem(statePath: string[], newState: string): Promise<void> {
-<<<<<<< HEAD
-    const key = statePath.join(SEPARATOR);
-    // level_pivot tables don't support UNIQUE indexes, so ON CONFLICT
-    // upserts aren't possible.  UPDATE … RETURNING is also unreliable:
-    // level_pivot's EmitRowCount unconditionally emits a single-row chunk
-    // (the "rows affected" count), which DuckDB's RETURNING pipeline
-    // surfaces as the query result — so RETURNING always reports 1 row
-    // regardless of whether any row was matched.  Use SELECT to check
-    // existence, then UPDATE or INSERT accordingly.
-    const ownTransaction = !this.#mInTransaction;
-    if (ownTransaction) {
-      await this.beginTransaction();
-    }
-    try {
-      const exists = await this.#mConnection.runAndReadAll(
-        `SELECT 1 FROM ${this.#mAlias}.kv WHERE key = $1`,
-        [key],
-      );
-      if (exists.getRows().length > 0) {
-        await this.#mConnection.run(`UPDATE ${this.#mAlias}.kv SET value = $2 WHERE key = $1`, [
-          key,
-          newState,
-        ]);
-      } else {
-        await this.#mConnection.run(`INSERT INTO ${this.#mAlias}.kv VALUES ($1, $2)`, [
-          key,
-          newState,
-        ]);
-      }
-      if (ownTransaction) {
-        await this.commitTransaction();
-      }
-    } catch (err) {
-      if (ownTransaction) {
-        await this.rollbackTransaction();
-      }
-      throw err;
-    }
-  }
-
-  public async removeItem(statePath: string[]): Promise<void> {
-    await this.#mConnection.run(`DELETE FROM ${this.#mAlias}.kv WHERE key = $1`, [
-      statePath.join(SEPARATOR),
-    ]);
-=======
     // No internal BEGIN/COMMIT here. The previous implementation issued
     // three statements (SELECT-then-UPDATE-or-INSERT) and self-wrapped in a
     // transaction to keep them atomic against concurrent writers to the
@@ -309,12 +250,10 @@ class LevelPersist implements IPersistor {
 
   public async removeItem(statePath: string[]): Promise<void> {
     await this.timedWrite("removeItem", 1, () =>
-      this.#mConnection.run(
-        `DELETE FROM ${this.#mAlias}.kv WHERE key = $1`,
-        [statePath.join(SEPARATOR)],
-      ),
+      this.#mConnection.run(`DELETE FROM ${this.#mAlias}.kv WHERE key = $1`, [
+        statePath.join(SEPARATOR),
+      ]),
     );
->>>>>>> 93e8868dc (Merge pull request #23049 from Nexus-Mods/fix/app-429)
   }
 
   /**
@@ -323,9 +262,7 @@ class LevelPersist implements IPersistor {
    * to chunk large diffs to bound failure granularity (see
    * ReduxPersistorIPC.processOperations).
    */
-  public async bulkSetItem(
-    items: ReadonlyArray<{ key: string[]; value: string }>,
-  ): Promise<void> {
+  public async bulkSetItem(items: ReadonlyArray<{ key: string[]; value: string }>): Promise<void> {
     if (items.length === 0) {
       return;
     }
