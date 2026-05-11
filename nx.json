@@ -15,8 +15,7 @@
       "{projectRoot}/tsdown.config.ts",
       "{projectRoot}/eslint.config.mjs",
       "{workspaceRoot}/eslint.config.base.mjs",
-      "{projectRoot}/src/**/*.ts",
-      "{projectRoot}/src/**/*.tsx"
+      "{projectRoot}/src/**/*.{ts,tsx}"
     ],
     "vortex-api": [{ "dependentTasksOutputFiles": "packages/vortex-api/lib/api.d.ts" }]
   },
@@ -24,12 +23,7 @@
     "build": {
       "dependsOn": ["^build"],
       "cache": true,
-      "inputs": [
-        "default",
-        "typescript",
-        "!{projectRoot}/src/**/*.test.ts",
-        "!{projectRoot}/src/**/*.test.tsx"
-      ],
+      "inputs": ["default", "typescript", "!{projectRoot}/src/**/*.test.{ts,tsx}"],
       "outputs": ["{projectRoot}/dist/"]
     },
     "typecheck": {
