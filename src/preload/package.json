@@ -10,6 +10,15 @@
     "lint": "pnpm eslint --concurrency auto .",
     "lint:quiet": "pnpm eslint --concurrency auto --quiet ."
   },
+  "nx": {
+    "targets": {
+      "build": {
+        "outputs": [
+          "{workspaceRoot}/src/main/build/preload.*"
+        ]
+      }
+    }
+  },
   "devDependencies": {
     "electron": "catalog:"
   },
