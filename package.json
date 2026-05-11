@@ -25,7 +25,6 @@
     "typecheck": "pnpm nx run-many -t typecheck",
     "lint": "pnpm nx run-many -t lint",
     "lint:quiet": "pnpm nx run-many -t lint:quiet",
-    "lint:ci": "pnpm run lint:quiet",
     "test": "pnpm vitest run --coverage",
     "test:watch": "pnpm vitest",
     "api": "pnpm nx run vortex-api:build",
