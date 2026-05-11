@@ -16,7 +16,7 @@ This is a list of all modules leaked by Vortex to extensions. Any module listed 
 | @nexusmods/adaptor-api | link:../../packages/adaptor-api |
 | @nexusmods/fomod-installer-ipc | 0.13.1 |
 | @nexusmods/fomod-installer-native | 0.13.1 |
-| @nexusmods/nexus-api | 1.5.2 |
+| @nexusmods/nexus-api | 1.6.0 |
 | @opentelemetry/api | 1.9.1 |
 | @opentelemetry/context-async-hooks | 2.6.1 |
 | @opentelemetry/context-zone | 2.7.0 |
@@ -27,7 +27,6 @@ This is a list of all modules leaked by Vortex to extensions. Any module listed 
 | @tailwindcss/cli | 4.2.2 |
 | @types/bluebird | 3.5.20 |
 | @types/uuid | 3.4.13 |
-| @vortex/fs | link:../../packages/fs |
 | bbcode-to-react | 0.2.11 |
 | big.js | 5.2.2 |
 | bluebird | 3.7.2 |
@@ -36,7 +35,6 @@ This is a list of all modules leaked by Vortex to extensions. Any module listed 
 | commander | 4.1.1 |
 | content-disposition | 0.5.4 |
 | content-type | 1.0.5 |
-| crash-dump | 2.0.2 |
 | d3 | 5.16.0 |
 | date-fns | 2.30.0 |
 | dayjs | 1.11.20 |
@@ -48,6 +46,7 @@ This is a list of all modules leaked by Vortex to extensions. Any module listed 
 | electron-redux | 1.4.9-sync |
 | electron-updater | 4.6.5 |
 | encoding-down | 6.3.0 |
+| exe-version | link:../../packages/exe-version |
 | feedparser | 2.3.0 |
 | fs-extra | 9.1.0 |
 | fuzzball | 1.4.0 |

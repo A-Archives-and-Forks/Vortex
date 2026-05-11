@@ -4,7 +4,7 @@
   "includeSubNodeModules": false,
   "directories": {
     "buildResources": "./nsis",
-    "app": "./dist",
+    "app": "./build",
     "output": "../../dist"
   },
   "win": {
@@ -45,8 +45,8 @@
     "mimeTypes": ["x-scheme-handler/nxm"]
   },
   "extraResources": [
-    "./build/VC_redist.x64.exe",
-    "./build/windowsdesktop-runtime-win-x64.exe",
+    "./temp/VC_redist.x64.exe",
+    "./temp/windowsdesktop-runtime-win-x64.exe",
     "./nsis/**/*",
     {
       "from": "../../locales",

@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "commonjs",
-  "main": "out/main.cjs",
+  "main": "build/main.cjs",
   "scripts": {
     "start": "pnpm cross-env NODE_ENV=development pnpm electron .",
     "build": "pnpm cross-env NODE_ENV=development node ./build.mjs",
@@ -15,9 +15,19 @@
     "test": "pnpm vitest run --config ./vitest.config.ts",
     "test:downloader": "pnpm vitest run --config ./vitest.downloader.config.ts",
     "test:adaptor": "pnpm vitest run --config ./vitest.integration.config.ts",
-    "package": "node ./prepare-dist-package.mjs && pnpm install --dir=./dist && pnpm electron-builder --config ./electron-builder.config.json --config.win.forceCodeSigning=true --config.win.sign=./sign.cjs --publish never",
-    "package:nosign": "node ./prepare-dist-package.mjs && pnpm install --dir=./dist && pnpm electron-builder --config ./electron-builder.config.json --publish never",
-    "prepare:win": "curl -L \"https://aka.ms/vs/17/release/vc_redist.x64.exe\" -o \"./build/VC_redist.x64.exe\" --create-dirs && curl -L \"https://aka.ms/dotnet/9.0/windowsdesktop-runtime-win-x64.exe\" -o \"./build/windowsdesktop-runtime-win-x64.exe\" --create-dirs"
+    "package": "node ./prepare-dist-package.mjs && pnpm install --dir=./build && pnpm electron-builder --config ./electron-builder.config.json --config.win.forceCodeSigning=true --config.win.sign=./sign.cjs --publish never",
+    "package:nosign": "node ./prepare-dist-package.mjs && pnpm install --dir=./build && pnpm electron-builder --config ./electron-builder.config.json --publish never",
+    "prepare:win": "curl -L \"https://aka.ms/vs/17/release/vc_redist.x64.exe\" -o \"./temp/VC_redist.x64.exe\" --create-dirs && curl -L \"https://aka.ms/dotnet/9.0/windowsdesktop-runtime-win-x64.exe\" -o \"./temp/windowsdesktop-runtime-win-x64.exe\" --create-dirs"
+  },
+  "nx": {
+    "targets": {
+      "start": {
+        "continuous": true,
+        "dependsOn": [
+          "build"
+        ]
+      }
+    }
   },
   "dependencies": {
     "@duckdb/node-api": "catalog:",
@@ -39,7 +49,6 @@
     "@types/bluebird": "catalog:",
     "@types/uuid": "catalog:",
     "@nexusmods/adaptor-api": "workspace:*",
-    "@vortex/fs": "workspace:*",
     "bbcode-to-react": "catalog:",
     "big.js": "catalog:",
     "bluebird": "catalog:",
@@ -48,7 +57,6 @@
     "commander": "catalog:",
     "content-disposition": "catalog:",
     "content-type": "catalog:",
-    "crash-dump": "catalog:",
     "d3": "catalog:",
     "date-fns": "catalog:",
     "dayjs": "catalog:",

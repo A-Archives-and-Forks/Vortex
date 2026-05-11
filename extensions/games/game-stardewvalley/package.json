@@ -7,8 +7,7 @@
     "_build": "node build.mjs && pnpm run _assets && pnpm extractInfo",
     "typecheck": "pnpm exec tsc -p tsconfig.json",
     "test": "vitest run --config vitest.config.ts",
-    "build": "pnpm run _build && node ../../copy-extension.mjs out",
-    "dist": "pnpm run _build && node ../../copy-extension.mjs dist"
+    "build": "pnpm run _build && node ../../copy-extension.mjs"
   },
   "author": "Black Tree Gaming Ltd.",
   "license": "GPL-3.0",
@@ -42,5 +41,26 @@
     "typescript": "catalog:",
     "vitest": "catalog:",
     "vortex-api": "workspace:*"
+  },
+  "nx": {
+    "tags": [
+      "vortex:extension"
+    ],
+    "targets": {
+      "build": {
+        "inputs": [
+          "default",
+          "typescript",
+          "vortex-api"
+        ]
+      },
+      "typecheck": {
+        "inputs": [
+          "default",
+          "typescript",
+          "vortex-api"
+        ]
+      }
+    }
   }
 }

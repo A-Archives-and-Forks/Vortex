@@ -1,4 +1,4 @@
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile, writeFile, mkdir, glob } from "node:fs/promises";
 import { resolve, dirname, isAbsolute } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -10,7 +10,7 @@ const PNPM_WORKSPACE_PATH = resolve(ROOT_DIR, "pnpm-workspace.yaml");
 
 const MAIN_DIR = resolve(__dirname);
 const MAIN_PACKAGE_PATH = resolve(MAIN_DIR, "package.json");
-const DIST_DIR = resolve(MAIN_DIR, "dist");
+const DIST_DIR = resolve(MAIN_DIR, "build");
 const DIST_PACKAGE_PATH = resolve(DIST_DIR, "package.json");
 
 /** Parse catalog from pnpm-workspace.yaml
@@ -56,11 +56,7 @@ function parseCatalog(yamlText) {
 
 /** Rewrite relative file dependencies to absolute file dependencies,
  *  and resolve workspace: dependencies to absolute file dependencies */
-function rewriteFileDependencies(
-  deps = {},
-  workspacePackageMap = {},
-  catalog = {},
-) {
+function rewriteFileDependencies(deps = {}, workspacePackageMap = {}, catalog = {}) {
   const rewritten = {};
 
   for (const [name, version] of Object.entries(deps)) {
@@ -136,9 +132,19 @@ function extractWorkspacePackageGlobs(yamlText) {
 async function buildWorkspacePackageMap(packagePaths) {
   const map = {};
 
+  const resolvedPaths = [];
   for (const pkgPath of packagePaths) {
-    if (pkgPath.includes("*")) continue;
+    if (pkgPath.includes("*")) {
+      const matches = await Array.fromAsync(glob(pkgPath, { cwd: ROOT_DIR }));
+      for (const match of matches) {
+        resolvedPaths.push(match);
+      }
+    } else {
+      resolvedPaths.push(pkgPath);
+    }
+  }
 
+  for (const pkgPath of resolvedPaths) {
     const pkgDir = resolve(ROOT_DIR, pkgPath);
     const pkgJsonPath = resolve(pkgDir, "package.json");
 
@@ -167,7 +173,7 @@ async function createMinimalPackageJson(workspacePackageMap, catalog) {
   const minimal = {
     name: "Vortex",
     version: process.env.VORTEX_VERSION || "1.0.0",
-    main: mainPkg.main.replace(/^out\//, ""),
+    main: mainPkg.main.replace(/^build\//, ""),
     author: "Black Tree Gaming Ltd.",
     description: "Vortex",
     license: "GPL-3.0",
@@ -187,13 +193,9 @@ async function createMinimalPackageJson(workspacePackageMap, catalog) {
 
   await mkdir(DIST_DIR, { recursive: true });
 
-  await writeFile(
-    DIST_PACKAGE_PATH,
-    JSON.stringify(minimal, null, 2) + "\n",
-    "utf8",
-  );
+  await writeFile(DIST_PACKAGE_PATH, JSON.stringify(minimal, null, 2) + "\n", "utf8");
 
-  console.log("✔  Created dist/package.json");
+  console.log("✔  Created build/package.json");
 }
 
 /**
@@ -231,17 +233,16 @@ function extractAllowBuildsBlock(yamlText) {
 async function preparePNPM(rawWorkspaceYaml) {
   const npmrc = ["node-linker=hoisted", "shamefully-hoist=true"].join("\n");
   await writeFile(resolve(DIST_DIR, ".npmrc"), npmrc);
-  console.log("✔  Created dist/.npmrc");
+  console.log("✔  Created build/.npmrc");
 
   const allowBuilds = extractAllowBuildsBlock(rawWorkspaceYaml);
   const catalog = extractCatalogBlock(rawWorkspaceYaml);
   const overrides = extractOverridesBlock(rawWorkspaceYaml);
 
-  const minimalYaml =
-    (overrides ? overrides + "\n" : "") + catalog + "\n" + allowBuilds + "\n";
+  const minimalYaml = (overrides ? overrides + "\n" : "") + catalog + "\n" + allowBuilds + "\n";
 
   await writeFile(resolve(DIST_DIR, "pnpm-workspace.yaml"), minimalYaml);
-  console.log("✔  Created dist/pnpm-workspace.yaml");
+  console.log("✔  Created build/pnpm-workspace.yaml");
 }
 
 async function main() {

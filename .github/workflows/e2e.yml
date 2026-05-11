@@ -55,7 +55,7 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm run build:all
+        run: pnpm run build
 
       - name: Install Playwright
         run: pnpm -F @vortex/e2e exec playwright install chromium
