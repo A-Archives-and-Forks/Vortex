@@ -51,7 +51,7 @@
   },
   "nx": {
     "tags": [
-      "extension"
+      "vortex:extension"
     ],
     "targets": {
       "build": {
