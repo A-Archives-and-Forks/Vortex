@@ -99,9 +99,6 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Download Runtime Dependencies
-        run: pnpm -F @vortex/main run prepare:win
-
       - name: Download CodeSignTool
         id: codesign
         shell: pwsh
@@ -135,6 +132,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+      
+      - name: Download Runtime Dependencies
+        run: pnpm -F @vortex/main run prepare:win
 
       - name: Create Signed Installer
         if: ${{ inputs.use-codesigning == true }}
