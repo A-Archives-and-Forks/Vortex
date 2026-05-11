@@ -6,6 +6,20 @@ import { unknownToError } from "@vortex/shared";
 import { recordErrorOnSpan } from "@vortex/shared/telemetry";
 import type PromiseBB from "bluebird";
 import type { BrowserWindow } from "electron";
+<<<<<<< HEAD
+=======
+
+import {
+  type Span,
+  context,
+  ROOT_CONTEXT,
+  SpanStatusCode,
+  trace,
+} from "@opentelemetry/api";
+import { isEnvironmentalError, unknownToError } from "@vortex/shared";
+import { isUserCanceled } from "@vortex/shared/errors";
+import { recordErrorOnSpan } from "@vortex/shared/telemetry";
+>>>>>>> a15af7977 (Merge pull request #23066 from Nexus-Mods/task/APP-438)
 import { ipcRenderer } from "electron";
 import * as fs from "fs-extra";
 import I18next from "i18next";
@@ -485,6 +499,12 @@ export function withTrackedActivity<T>(
       const result = await fun(
         (key, value) => span.setAttribute(key, value),
         (error) => {
+<<<<<<< HEAD
+=======
+          if (isEnvironmentalError(error) || isUserCanceled(error)) {
+            return;
+          }
+>>>>>>> a15af7977 (Merge pull request #23066 from Nexus-Mods/task/APP-438)
           hasError = true;
           recordError(error);
         },
@@ -495,11 +515,24 @@ export function withTrackedActivity<T>(
       return result;
     } catch (unknownErr) {
       const err = unknownToError(unknownErr);
+<<<<<<< HEAD
       span.setStatus({
         code: SpanStatusCode.ERROR,
         message: err?.message,
       });
       recordError(err);
+=======
+      // Environmental errors (write-protected folders, disk full, etc.) and
+      // user cancellations leave the span status UNSET so
+      // RingBufferSpanProcessor doesn't flush the trace.
+      if (!isEnvironmentalError(err) && !isUserCanceled(err)) {
+        span.setStatus({
+          code: SpanStatusCode.ERROR,
+          message: err?.message,
+        });
+        recordError(err);
+      }
+>>>>>>> a15af7977 (Merge pull request #23066 from Nexus-Mods/task/APP-438)
       throw err;
     } finally {
       span.end();
@@ -530,6 +563,12 @@ export function recordErrorSpan(
   error: Error,
   attributes?: Record<string, string | number | boolean>,
 ): void {
+<<<<<<< HEAD
+=======
+  if (isEnvironmentalError(error) || isUserCanceled(error)) {
+    return;
+  }
+>>>>>>> a15af7977 (Merge pull request #23066 from Nexus-Mods/task/APP-438)
   const activeSpan = trace.getSpan(context.active());
 
   if (activeSpan !== undefined) {
