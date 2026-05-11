@@ -9,9 +9,12 @@
   "namedInputs": {
     "default": ["{projectRoot}/package.json", "{workspaceRoot}/pnpm-workspace.yaml"],
     "typescript": [
+      "{workspaceRoot}/tsconfig*.json",
       "{projectRoot}/tsconfig*.json",
       "{projectRoot}/build.mjs",
       "{projectRoot}/tsdown.config.ts",
+      "{projectRoot}/eslint.config.mjs",
+      "{workspaceRoot}/eslint.config.base.mjs",
       "{projectRoot}/src/**/*.ts",
       "{projectRoot}/src/**/*.tsx"
     ],
@@ -34,6 +37,18 @@
       "cache": true,
       "inputs": ["default", "typescript"],
       "outputs": ["{projectRoot}/tsconfig*.tsbuildinfo"]
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "cache": true,
+      "inputs": ["default", "typescript"],
+      "outputs": []
+    },
+    "lint:quiet": {
+      "dependsOn": ["^build"],
+      "cache": true,
+      "inputs": ["default", "typescript"],
+      "outputs": []
     }
   }
 }
