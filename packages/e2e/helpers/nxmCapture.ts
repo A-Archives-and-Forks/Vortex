@@ -9,11 +9,7 @@ export async function installNxmCapture(page: Page): Promise<void> {
       const w = globalThis as unknown as {
         __capturedNxm?: string;
         open: (url?: string | URL, ...rest: unknown[]) => unknown;
-        addEventListener: (
-          type: string,
-          fn: (e: unknown) => void,
-          capture?: boolean,
-        ) => void;
+        addEventListener: (type: string, fn: (e: unknown) => void, capture?: boolean) => void;
         location: {
           assign?: (url: string) => void;
           replace?: (url: string) => void;
@@ -51,8 +47,7 @@ export async function installNxmCapture(page: Page): Promise<void> {
       w.addEventListener(
         "click",
         (e: unknown) => {
-          const target = (e as { target: { closest?: (s: string) => unknown } })
-            .target;
+          const target = (e as { target: { closest?: (s: string) => unknown } }).target;
           const link = target.closest?.("a") as { href?: string } | undefined;
           if (link?.href?.startsWith("nxm:") === true) {
             w.__capturedNxm = link.href;
@@ -66,10 +61,7 @@ export async function installNxmCapture(page: Page): Promise<void> {
 
 // DOM scan is the fallback — the slow-download flow writes the nxm:// URL into
 // the rendered DOM (anchor href / data attribute) when the countdown completes.
-export async function waitForNxmUrl(
-  page: Page,
-  timeoutMs: number,
-): Promise<string | null> {
+export async function waitForNxmUrl(page: Page, timeoutMs: number): Promise<string | null> {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     const hooked = await page

@@ -4,8 +4,9 @@
  * install completes cleanly. Premium users skip the slow-download interstitial.
  */
 import type { Browser } from "@playwright/test";
-import { test, expect } from "../fixtures/vortex-app";
+
 import { cleanupFakeGame } from "../fixtures/game-setup/fake-game";
+import { test, expect } from "../fixtures/vortex-app";
 import { acceptConsent } from "../helpers/consent";
 import { manageGame, type ManagedGame } from "../helpers/games";
 import { loginToNexus } from "../helpers/login";
@@ -85,23 +86,15 @@ test.describe("Mods - Downloads", () => {
           if (modalAppeared) {
             // Premium users (and dep-free mods) skip this confirmation —
             // the nxm:// URL fires directly without an inner Download link.
-            const modalDownloadButton = modal
-              .getByRole("link", { name: /^download$/i })
-              .first();
-            if (
-              await modalDownloadButton
-                .isVisible({ timeout: 3_000 })
-                .catch(() => false)
-            ) {
+            const modalDownloadButton = modal.getByRole("link", { name: /^download$/i }).first();
+            if (await modalDownloadButton.isVisible({ timeout: 3_000 }).catch(() => false)) {
               await modalDownloadButton.click({ timeout: 15_000 });
             }
           }
         });
 
         await test.step("Capture the nxm:// URL", async () => {
-          await auth.page
-            .waitForLoadState("load", { timeout: 30_000 })
-            .catch(() => undefined);
+          await auth.page.waitForLoadState("load", { timeout: 30_000 }).catch(() => undefined);
           await acceptConsent(auth.page);
           await installNxmCapture(auth.page);
 
@@ -123,9 +116,7 @@ test.describe("Mods - Downloads", () => {
 
           nxmUrl = await waitForNxmUrl(auth.page, 60_000);
           if (nxmUrl === null) {
-            throw new Error(
-              "No nxm:// URL appeared in the page after the download click",
-            );
+            throw new Error("No nxm:// URL appeared in the page after the download click");
           }
         });
 

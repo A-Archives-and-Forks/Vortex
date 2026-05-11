@@ -11,8 +11,6 @@ export class CookieConsent {
     this.page = page;
     this.quantcastAccept = page.locator("button#accept-btn");
     this.cookiebotAllowAll = page.getByRole("button", { name: /^allow all$/i });
-    this.cookiebotAcceptId = page.locator(
-      "#CybotCookiebotDialogBodyButtonAccept",
-    );
+    this.cookiebotAcceptId = page.locator("#CybotCookiebotDialogBodyButtonAccept");
   }
 }

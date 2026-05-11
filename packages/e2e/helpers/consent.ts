@@ -26,9 +26,7 @@ export async function acceptConsent(page: Page): Promise<void> {
   }
   // Quantcast can render inside an iframe.
   for (const frame of page.frames()) {
-    const acceptInFrame = frame
-      .locator("button#accept-btn, button:has-text('Allow all')")
-      .first();
+    const acceptInFrame = frame.locator("button#accept-btn, button:has-text('Allow all')").first();
     if (await acceptInFrame.isVisible({ timeout: 1_000 }).catch(() => false)) {
       await acceptInFrame.click({ timeout: 5_000 }).catch(() => undefined);
       return;
