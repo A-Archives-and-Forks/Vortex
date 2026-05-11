@@ -132,7 +132,7 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-      
+
       - name: Download Runtime Dependencies
         run: pnpm -F @vortex/main run prepare:win
 
