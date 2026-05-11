@@ -60,17 +60,11 @@ describe("LevelPersist.removeItem", () => {
     await persist.removeItem(["settings", "window", "x"]);
 
     expect(connection.run).toHaveBeenCalledTimes(1);
-<<<<<<< HEAD
-    expect(connection.run).toHaveBeenCalledWith("DELETE FROM db.kv WHERE key = $1", [
-      `settings${SEPARATOR}window${SEPARATOR}x`,
-    ]);
-=======
     const exact = `settings${SEPARATOR}window${SEPARATOR}x`;
     expect(connection.run).toHaveBeenCalledWith(
       "DELETE FROM db.kv WHERE key = $1 OR starts_with(key, $2)",
       [exact, `${exact}${SEPARATOR}`],
     );
->>>>>>> 8cccc973e (Merge pull request #23112 from Nexus-Mods/fix/app-446)
   });
 });
 
@@ -150,14 +144,7 @@ describe("LevelPersist.bulkRemoveItem", () => {
         "OR key = $3 OR starts_with(key, $4) " +
         "OR key = $5 OR starts_with(key, $6)",
     );
-    expect(params).toEqual([
-      "a",
-      `a${SEPARATOR}`,
-      "b",
-      `b${SEPARATOR}`,
-      "c",
-      `c${SEPARATOR}`,
-    ]);
+    expect(params).toEqual(["a", `a${SEPARATOR}`, "b", `b${SEPARATOR}`, "c", `c${SEPARATOR}`]);
   });
 
   it("joins compound key paths with the separator", async () => {
