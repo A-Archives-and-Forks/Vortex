@@ -146,31 +146,23 @@ export function runElevated(
 
       const modulePaths = getRealNodeModulePaths(process.cwd()).map((p) => p.split("\\").join("/"));
 
-<<<<<<< HEAD
+      // In production builds the elevated Node child runs with
+      // ELECTRON_RUN_AS_NODE, which disables Electron's asar resolution.
+      // Asar-unpacked deps (e.g. json-socket) live under
+      // resources/app.asar.unpacked/node_modules and must be on the
+      // require search path explicitly. In dev the path doesn't exist
+      // and is harmless. See issue #23043.
+      if (process.resourcesPath) {
+        modulePaths.unshift(
+          path
+            .join(process.resourcesPath, "app.asar.unpacked", "node_modules")
+            .split("\\")
+            .join("/"),
+        );
+      }
+
       let mainBody = elevatedMain.toString();
       mainBody = mainBody.slice(mainBody.indexOf("{") + 1, mainBody.lastIndexOf("}"));
-=======
-        // In production builds the elevated Node child runs with
-        // ELECTRON_RUN_AS_NODE, which disables Electron's asar resolution.
-        // Asar-unpacked deps (e.g. json-socket) live under
-        // resources/app.asar.unpacked/node_modules and must be on the
-        // require search path explicitly. In dev the path doesn't exist
-        // and is harmless. See issue #23043.
-        if (process.resourcesPath) {
-          modulePaths.unshift(
-            path
-              .join(process.resourcesPath, "app.asar.unpacked", "node_modules")
-              .split("\\")
-              .join("/"),
-          );
-        }
-
-        let mainBody = elevatedMain.toString();
-        mainBody = mainBody.slice(
-          mainBody.indexOf("{") + 1,
-          mainBody.lastIndexOf("}"),
-        );
->>>>>>> 1e79865b6 (Merge pull request #23107 from Nexus-Mods/fix/app-444)
 
       // The elevatedMain function body is serialized via .toString() and executed
       // in a separate Node process. We use __non_webpack_require__ in the function
@@ -197,33 +189,17 @@ export function runElevated(
         ${mainBody}\n
       `;
 
-<<<<<<< HEAD
       fs.write(fd, prog, (writeErr: Error, _written: number, _str: string) => {
         if (writeErr) {
           try {
             cleanup();
           } catch (cleanupErr) {
-            const errorMessage = getErrorMessageOrDefault(cleanupErr);
-            console.error("failed to clean up temporary script", errorMessage);
+            log("warn", "failed to clean up temporary script", {
+              error: getErrorMessageOrDefault(cleanupErr),
+            });
           }
           return reject(writeErr);
         }
-=======
-        fs.write(
-          fd,
-          prog,
-          (writeErr: Error, _written: number, _str: string) => {
-            if (writeErr) {
-              try {
-                cleanup();
-              } catch (cleanupErr) {
-                log("warn", "failed to clean up temporary script", {
-                  error: getErrorMessageOrDefault(cleanupErr),
-                });
-              }
-              return reject(writeErr);
-            }
->>>>>>> 1e79865b6 (Merge pull request #23107 from Nexus-Mods/fix/app-444)
 
         try {
           fs.closeSync(fd);

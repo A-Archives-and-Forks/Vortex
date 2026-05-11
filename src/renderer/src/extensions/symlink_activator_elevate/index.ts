@@ -525,14 +525,10 @@ class DeploymentMethod extends LinkingDeployment {
           if (elevating) {
             // this is called if consent.exe disappeared but none of our "regular" code paths ran
             // which would have cancelled this timeout
-            log(
-              "warn",
-              "[elevation-trace] watchdog fired, no initialised IPC",
-              {
-                elapsedMs: Date.now() - tStart,
-                ipcPath,
-              },
-            );
+            log("warn", "[elevation-trace] watchdog fired, no initialised IPC", {
+              elapsedMs: Date.now() - tStart,
+              ipcPath,
+            });
             this.api.store.dispatch(clearUIBlocker("elevating"));
             this.endIPC("no init");
             /*
