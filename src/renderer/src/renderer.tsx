@@ -109,6 +109,7 @@ import { setTFunction } from "./util/fs";
 import GlobalNotifications from "./util/GlobalNotifications";
 import getI18n, { changeLanguage, fallbackTFunc, type TFunction } from "./util/i18n";
 import { showError } from "./util/message";
+import { readStartupSettings } from "./util/startupSettings";
 import { getSafe } from "./util/storeHelper";
 import { bytesToString, getAllPropertyNames } from "./util/util";
 import { AppLayout } from "./views/AppLayout";
@@ -407,6 +408,7 @@ async function initGlobals(): Promise<void> {
   // Initialize application data asynchronously from main process cache
   // This replaces synchronous IPC calls that were in the preload script
   await ApplicationData.init();
+  readStartupSettings();
 }
 
 function applyAppMetadata(metadata: AppInitMetadata): void {
