@@ -27,7 +27,12 @@
     "build": {
       "dependsOn": ["^build"],
       "cache": true,
-      "inputs": ["default", "typescript", "!{projectRoot}/src/**/*.test.{ts,tsx}"],
+      "inputs": [
+        "default",
+        "typescript",
+        "!{projectRoot}/src/**/*.test.{ts,tsx}",
+        { "dependentTasksOutputFiles": "**/dist/**" }
+      ],
       "outputs": ["{projectRoot}/dist/"]
     },
     "typecheck": {
