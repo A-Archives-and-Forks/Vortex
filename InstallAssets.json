@@ -7,7 +7,7 @@
       "skipPaths": 0
     },
     {
-      "srcPath": "src/stylesheets",
+      "srcPath": "src/stylesheets/**/*.{scss,css}",
       "outPath": "assets/css",
       "skipPaths": 2
     },
