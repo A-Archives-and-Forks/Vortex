@@ -29,11 +29,71 @@
       },
       "build": {
         "dependsOn": [
-          "^build",
+          "copy-assets",
+          "copy-extensions",
+          "^build"
+        ]
+      },
+      "copy-assets": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "node ./copy-assets.mjs",
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
           {
             "target": "build",
             "projects": "@vortex/stylesheets"
           }
+        ],
+        "cache": true,
+        "inputs": [
+          "default",
+          {
+            "dependentTasksOutputFiles": "**/dist/**"
+          },
+          "{workspaceRoot}/src/stylesheets/**/*.scss",
+          "{workspaceRoot}/src/renderer/src/index.html",
+          "{workspaceRoot}/src/renderer/src/splash.html",
+          "{workspaceRoot}/src/queries/**/*",
+          "{workspaceRoot}/assets/**/*",
+          "{workspaceRoot}/LICENSE.md"
+        ],
+        "outputs": [
+          "{projectRoot}/build/assets/",
+          "{projectRoot}/build/index.html",
+          "{projectRoot}/build/splash.html",
+          "{projectRoot}/build/queries/",
+          "{projectRoot}/build/fonts/",
+          "{projectRoot}/build/icons/",
+          "{projectRoot}/build/images/",
+          "{projectRoot}/build/pictograms/",
+          "{projectRoot}/build/licenses/",
+          "{projectRoot}/build/LICENSE.md",
+          "{projectRoot}/build/modules.json"
+        ]
+      },
+      "copy-extensions": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "node ./copy-extensions.mjs",
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          {
+            "target": "build",
+            "projects": "tag:vortex:extension"
+          }
+        ],
+        "cache": true,
+        "inputs": [
+          "default",
+          {
+            "dependentTasksOutputFiles": "**/dist/**"
+          }
+        ],
+        "outputs": [
+          "{projectRoot}/build/bundledPlugins/"
         ]
       }
     }

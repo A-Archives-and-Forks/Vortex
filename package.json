@@ -18,7 +18,7 @@
     "start": "pnpm -F @vortex/main run start",
     "build": "pnpm nx run-many -t build lint typecheck && pnpm run assets",
     "dist": "pnpm run build && pnpm --filter \"./src/*\" -r run dist",
-    "assets": "npx tsx scripts/download-duckdb-extensions.ts && node ./scripts/dependency-report.mjs && node ./InstallAssets.mjs ./src/main/build",
+    "assets": "npx tsx scripts/download-duckdb-extensions.ts && node ./scripts/dependency-report.mjs",
     "package": "pnpm run dist && pnpm -F @vortex/main run package",
     "package:nosign": "pnpm run dist && pnpm -F @vortex/main run package:nosign",
     "package:local": "pnpm -F @vortex/main run prepare:win && pnpm run package:nosign",
