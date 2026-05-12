@@ -8,9 +8,8 @@
   "type": "commonjs",
   "main": "build/main.cjs",
   "scripts": {
-    "start": "pnpm cross-env NODE_ENV=development pnpm electron .",
-    "build": "pnpm cross-env NODE_ENV=development node ./build.mjs",
-    "dist": "pnpm cross-env NODE_ENV=production node ./build.mjs",
+    "start": "pnpm electron .",
+    "build": "node ./build.mjs",
     "typecheck": "pnpm tsc",
     "lint": "pnpm eslint --quiet --concurrency auto .",
     "lint:verbose": "pnpm eslint --concurrency auto .",
@@ -26,6 +25,7 @@
     "targets": {
       "start": {
         "continuous": true,
+        "cache": false,
         "dependsOn": [
           "build"
         ]
@@ -35,7 +35,8 @@
           "copy-assets",
           "copy-extensions",
           "^build"
-        ]
+        ],
+        "cache": false
       },
       "publish": {
         "dependsOn": [
@@ -43,11 +44,13 @@
         ]
       },
       "package": {
+        "cache": false,
         "dependsOn": [
           "publish"
         ]
       },
       "package:nosign": {
+        "cache": false,
         "dependsOn": [
           "publish"
         ]
