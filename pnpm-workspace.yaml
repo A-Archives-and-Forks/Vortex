@@ -288,6 +288,7 @@ dedupePeers: true
 
 engineStrict: true
 failIfNoMatch: true
+injectWorkspacePackages: true
 
 overrides:
   "@types/react": "16"
