@@ -3,10 +3,7 @@ import * as path from "path";
 import { getErrorCode, getErrorMessageOrDefault } from "@vortex/shared";
 import type { IParameters } from "@vortex/shared/cli";
 
-<<<<<<< HEAD
-=======
 import { log } from "../logging";
->>>>>>> f25ff55da (Merge pull request #23130 from Nexus-Mods/fix/app-448)
 import { getApplication } from "./application";
 import Debouncer from "./Debouncer";
 import * as fs from "./fs";

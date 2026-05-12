@@ -62,13 +62,7 @@ import { getErrorCode, getErrorMessageOrDefault, unknownToError } from "@vortex/
 import type { IParameters } from "@vortex/shared/cli";
 import type { AppInitMetadata } from "@vortex/shared/ipc";
 import Bluebird from "bluebird";
-<<<<<<< HEAD
 import { ipcRenderer, webFrame } from "electron";
-=======
-import type crashDumpT from "crash-dump";
-import { ipcRenderer, webFrame } from "electron";
-import * as nativeErr from "native-errors";
->>>>>>> f25ff55da (Merge pull request #23130 from Nexus-Mods/fix/app-448)
 import React from "react";
 
 import "./util/monkeyPatching";
@@ -123,21 +117,8 @@ import LoadingScreen from "./views/LoadingScreen";
 
 log("debug", "renderer process started", { pid: process["pid"] });
 
-<<<<<<< HEAD
 // on windows, copy systemCode to nativeCode so downstream error handling
 // can read a consistent property name
-=======
-let deinitCrashDump: () => void;
-
-if (process.env.CRASH_REPORTING === "vortex") {
-  void window.api.app.getPath("temp").then((tempPath: string) => {
-    const crashDump: typeof crashDumpT = require("crash-dump").default;
-    deinitCrashDump = crashDump(path.join(tempPath, "dumps", `crash-renderer-${Date.now()}.dmp`));
-  });
-}
-
-// on windows, inject the native error code into "unknown" errors to help track those down
->>>>>>> f25ff55da (Merge pull request #23130 from Nexus-Mods/fix/app-448)
 if (process.platform === "win32") {
   const oldPrep = Error.prepareStackTrace;
   Error.prepareStackTrace = (error, stack) => {
