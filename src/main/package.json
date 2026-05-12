@@ -26,6 +26,15 @@
         "dependsOn": [
           "build"
         ]
+      },
+      "build": {
+        "dependsOn": [
+          "^build",
+          {
+            "target": "build",
+            "projects": "@vortex/stylesheets"
+          }
+        ]
       }
     }
   },
