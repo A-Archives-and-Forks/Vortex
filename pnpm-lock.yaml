@@ -4,7 +4,6 @@ settings:
   autoInstallPeers: true
   dedupePeers: true
   excludeLinksFromLockfile: false
-  injectWorkspacePackages: true
 
 catalogs:
   default:
@@ -952,7 +951,7 @@ importers:
         version: 7.7.4
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(react-i18next@11.18.6)(react-redux@7.2.9)(redux-act@1.8.0)(redux@4.2.1)(semver@7.7.4)
+        version: link:../../packages/vortex-api
 
   extensions/collections:
     devDependencies:
@@ -1123,13 +1122,13 @@ importers:
         version: 4.17.23
       react-bootstrap:
         specifier: 'catalog:'
-        version: 0.33.1(react-dom@16.14.0)
+        version: 0.33.1(react-dom@16.14.0)(react@16.14.0)
       react-dom:
         specifier: 'catalog:'
         version: 16.14.0(react@16.14.0)
       react-i18next:
         specifier: 'catalog:'
-        version: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)
+        version: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0)
       redux:
         specifier: 'catalog:'
         version: 4.2.1
@@ -1138,7 +1137,7 @@ importers:
         version: 1.8.0
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(react-bootstrap@0.33.1)(react-dom@16.14.0)(react-i18next@11.18.6)(redux-act@1.8.0)(redux@4.2.1)
+        version: link:../../packages/vortex-api
 
   extensions/extension-dashlet:
     devDependencies:
@@ -1180,7 +1179,7 @@ importers:
         version: 5.9.3
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(bluebird@3.7.2)(react-bootstrap@0.33.1)(react-i18next@11.18.6)(redux-act@1.8.0)(redux-thunk@2.4.2)(redux@4.2.1)
+        version: link:../../packages/vortex-api
 
   extensions/feedback:
     devDependencies:
@@ -1237,7 +1236,7 @@ importers:
         version: 0.1.0
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(bluebird@3.7.2)(react-bootstrap@0.33.1)(react-i18next@11.18.6)(redux-act@1.8.0)(redux-thunk@2.4.2)(redux@4.2.1)
+        version: link:../../packages/vortex-api
       winapi-bindings:
         specifier: 'catalog:'
         version: https://codeload.github.com/Nexus-Mods/node-winapi-bindings/tar.gz/faa92afe3320731e98abc15b3f5f19c60896d7c1
@@ -1345,7 +1344,7 @@ importers:
         version: 5.9.3
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-bootstrap@0.33.1)
+        version: link:../../packages/vortex-api
 
   extensions/gamebryo-archive-invalidation:
     devDependencies:
@@ -1522,7 +1521,7 @@ importers:
         version: 1.8.0
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(bluebird@3.7.2)(immutability-helper@3.1.1)(react-i18next@11.18.6)(redux-act@1.8.0)(redux@4.2.1)
+        version: link:../../packages/vortex-api
 
   extensions/gamebryo-plugin-management:
     devDependencies:
@@ -2164,7 +2163,7 @@ importers:
         version: 5.9.3
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-i18next@11.18.6)(react-redux@7.2.9)(react@16.14.0)(redux-act@1.8.0)(semver@7.7.4)
+        version: link:../../../packages/vortex-api
 
   extensions/games/game-prisonarchitect:
     devDependencies:
@@ -2312,7 +2311,7 @@ importers:
         version: 4.1.2(@opentelemetry/api@1.9.1)(@types/node@24.12.2)(@vitest/ui@4.1.0)(happy-dom@20.8.8)(jsdom@20.0.3)(vite@8.0.3)
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(react-bootstrap@0.33.1)(react-i18next@11.18.6)(react-redux@7.2.9)(react@16.14.0)(redux-act@1.8.0)(relaxed-json@1.0.3)(semver@7.7.4)
+        version: link:../../../packages/vortex-api
 
   extensions/games/game-starfield:
     devDependencies:
@@ -2649,7 +2648,7 @@ importers:
         version: 5.9.3
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(react-i18next@11.18.6)(react-redux@7.2.9)(redux-act@1.8.0)(redux@4.2.1)(semver@7.7.4)
+        version: link:../../packages/vortex-api
 
   extensions/local-gamesettings:
     devDependencies:
@@ -2748,7 +2747,7 @@ importers:
         version: 7.7.4
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(bluebird@3.7.2)(immutability-helper@3.1.1)(react-i18next@11.18.6)(react@16.14.0)(redux-act@1.8.0)(semver@7.7.4)
+        version: link:../../packages/vortex-api
 
   extensions/mo-import:
     devDependencies:
@@ -2868,7 +2867,7 @@ importers:
         version: https://codeload.github.com/Nexus-Mods/node-turbowalk/tar.gz/3502f6ffc3f9eb55fe1c9c097b4e4772edce0c0f
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-bootstrap@0.33.1)(react@16.14.0)(redux@4.2.1)(semver@7.7.4)
+        version: link:../../packages/vortex-api
 
   extensions/mod-dependency-manager:
     devDependencies:
@@ -3009,13 +3008,13 @@ importers:
         version: 2.4.1
       react-bootstrap:
         specifier: 'catalog:'
-        version: 0.33.1(react-dom@16.14.0)
+        version: 0.33.1(react-dom@16.14.0)(react@16.14.0)
       react-dom:
         specifier: 'catalog:'
         version: 16.14.0(react@16.14.0)
       react-i18next:
         specifier: 'catalog:'
-        version: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)
+        version: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0)
       redux-act:
         specifier: 'catalog:'
         version: 1.8.0
@@ -3024,7 +3023,7 @@ importers:
         version: 2.4.2(redux@4.2.1)
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(react-bootstrap@0.33.1)(react-dom@16.14.0)(react-i18next@11.18.6)(redux-act@1.8.0)(redux-thunk@2.4.2)
+        version: link:../../packages/vortex-api
 
   extensions/mod-report:
     devDependencies:
@@ -3091,7 +3090,7 @@ importers:
         version: 7.7.4
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-i18next@11.18.6)(react-redux@7.2.9)(react@16.14.0)(redux-act@1.8.0)(semver@7.7.4)
+        version: link:../../packages/vortex-api
       vortex-parse-ini:
         specifier: 'catalog:'
         version: https://codeload.github.com/Nexus-Mods/vortex-parse-ini/tar.gz/2425af99d1cff2331ccf3aacfa892c314e99e18d
@@ -3163,7 +3162,7 @@ importers:
         version: 2.4.2(redux@4.2.1)
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-bootstrap@0.33.1)(react-dom@16.14.0)(react-i18next@11.18.6)(react@16.14.0)(redux-act@1.8.0)(redux-thunk@2.4.2)(redux@4.2.1)
+        version: link:../../packages/vortex-api
 
   extensions/modtype-gedosato:
     devDependencies:
@@ -3187,7 +3186,7 @@ importers:
         version: 2.4.2(redux@4.2.1)
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(bluebird@3.7.2)(immutability-helper@3.1.1)(react-bootstrap@0.33.1)(react-dom@16.14.0)(react-i18next@11.18.6)(react@16.14.0)(redux-act@1.8.0)(redux-thunk@2.4.2)
+        version: link:../../packages/vortex-api
       winapi-bindings:
         specifier: 'catalog:'
         version: https://codeload.github.com/Nexus-Mods/node-winapi-bindings/tar.gz/faa92afe3320731e98abc15b3f5f19c60896d7c1
@@ -3230,7 +3229,7 @@ importers:
         version: 7.7.4
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(immutability-helper@3.1.1)(react-bootstrap@0.33.1)(react-dom@16.14.0)(react-i18next@11.18.6)(react@16.14.0)(redux@4.2.1)(semver@7.7.4)
+        version: link:../../packages/vortex-api
       winapi-bindings:
         specifier: 'catalog:'
         version: https://codeload.github.com/Nexus-Mods/node-winapi-bindings/tar.gz/faa92afe3320731e98abc15b3f5f19c60896d7c1
@@ -3284,7 +3283,7 @@ importers:
         version: 5.9.3
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(bluebird@3.7.2)(immutability-helper@3.1.1)(react-i18next@11.18.6)(redux-act@1.8.0)(redux@4.2.1)
+        version: link:../../packages/vortex-api
       vortex-parse-ini:
         specifier: 'catalog:'
         version: https://codeload.github.com/Nexus-Mods/vortex-parse-ini/tar.gz/2425af99d1cff2331ccf3aacfa892c314e99e18d
@@ -3320,7 +3319,7 @@ importers:
         version: 2.2.17
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-i18next@11.18.6)(react-redux@7.2.9)(react@16.14.0)(redux-act@1.8.0)(semver@7.7.4)
+        version: link:../../packages/vortex-api
 
   extensions/new-file-monitor:
     devDependencies:
@@ -3491,7 +3490,7 @@ importers:
         version: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0)
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-i18next@11.18.6)(react-redux@7.2.9)(react@16.14.0)(redux-act@1.8.0)(semver@7.7.4)
+        version: link:../../packages/vortex-api
 
   extensions/script-extender-error-check:
     devDependencies:
@@ -3533,7 +3532,7 @@ importers:
         version: https://codeload.github.com/Nexus-Mods/node-turbowalk/tar.gz/3502f6ffc3f9eb55fe1c9c097b4e4772edce0c0f
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(react-bootstrap@0.33.1)(react-i18next@11.18.6)(react-redux@7.2.9)(react@16.14.0)(redux-act@1.8.0)(relaxed-json@1.0.3)(semver@7.7.4)
+        version: link:../../packages/vortex-api
 
   extensions/script-extender-installer:
     dependencies:
@@ -3588,7 +3587,7 @@ importers:
         version: 5.9.3
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-bootstrap@0.33.1)(react@16.14.0)(redux@4.2.1)(semver@7.7.4)
+        version: link:../../packages/vortex-api
 
   extensions/test-gameversion:
     devDependencies:
@@ -3636,7 +3635,7 @@ importers:
         version: 2.4.2(redux@4.2.1)
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(bluebird@3.7.2)(immutability-helper@3.1.1)(react-bootstrap@0.33.1)(react-dom@16.14.0)(react-i18next@11.18.6)(react@16.14.0)(redux-act@1.8.0)(redux-thunk@2.4.2)
+        version: link:../../packages/vortex-api
       vortex-parse-ini:
         specifier: 'catalog:'
         version: https://codeload.github.com/Nexus-Mods/vortex-parse-ini/tar.gz/2425af99d1cff2331ccf3aacfa892c314e99e18d
@@ -3672,7 +3671,7 @@ importers:
         version: https://codeload.github.com/Nexus-Mods/node-turbowalk/tar.gz/3502f6ffc3f9eb55fe1c9c097b4e4772edce0c0f
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-bootstrap@0.33.1)
+        version: link:../../packages/vortex-api
       winapi-bindings:
         specifier: 'catalog:'
         version: https://codeload.github.com/Nexus-Mods/node-winapi-bindings/tar.gz/faa92afe3320731e98abc15b3f5f19c60896d7c1
@@ -3783,7 +3782,7 @@ importers:
         version: 5.9.3
       vortex-api:
         specifier: workspace:*
-        version: file:packages/vortex-api(@types/bluebird@3.5.20)(react-i18next@11.18.6)(react-redux@7.2.9)(redux-act@1.8.0)(redux@4.2.1)(semver@7.7.4)
+        version: link:../../packages/vortex-api
 
   packages/adaptor-api:
     devDependencies:
@@ -12532,30 +12531,6 @@ packages:
     resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
     engines: {node: '>=0.10.0'}
 
-  vortex-api@file:packages/vortex-api:
-    resolution: {directory: packages/vortex-api, type: directory}
-    hasBin: true
-    peerDependencies:
-      '@types/bluebird': 'catalog:'
-      bluebird: 'catalog:'
-      fs-extra: 'catalog:'
-      immutability-helper: 'catalog:'
-      minimatch: 'catalog:'
-      react: 'catalog:'
-      react-bootstrap: 'catalog:'
-      react-dom: 'catalog:'
-      react-i18next: 'catalog:'
-      react-redux: 'catalog:'
-      react-select: 'catalog:'
-      redux: 'catalog:'
-      redux-act: 'catalog:'
-      redux-thunk: 'catalog:'
-      relaxed-json: 'catalog:'
-      semver: 'catalog:'
-      string-template: 'catalog:'
-      uuid: 'catalog:'
-      xml2js: 'catalog:'
-
   vortex-parse-ini@https://codeload.github.com/Nexus-Mods/vortex-parse-ini/tar.gz/2425af99d1cff2331ccf3aacfa892c314e99e18d:
     resolution: {tarball: https://codeload.github.com/Nexus-Mods/vortex-parse-ini/tar.gz/2425af99d1cff2331ccf3aacfa892c314e99e18d}
     version: 0.4.0
@@ -19735,37 +19710,6 @@ snapshots:
       react: 16.14.0
       react-dom: 16.14.0(react@16.14.0)
 
-  react-bootstrap@0.33.1:
-    dependencies:
-      '@babel/runtime-corejs2': 7.29.2
-      classnames: 2.5.1
-      dom-helpers: 3.4.0
-      invariant: 2.2.4
-      keycode: 2.2.1
-      prop-types: 15.8.1
-      prop-types-extra: 1.1.1(react@16.14.0)
-      react-overlays: 0.9.3(react-dom@16.14.0)(react@16.14.0)
-      react-prop-types: 0.4.0(react@16.14.0)
-      react-transition-group: 2.9.0(react-dom@16.14.0)(react@16.14.0)
-      uncontrollable: 7.2.1(react@16.14.0)
-      warning: 3.0.0
-
-  react-bootstrap@0.33.1(react-dom@16.14.0):
-    dependencies:
-      '@babel/runtime-corejs2': 7.29.2
-      classnames: 2.5.1
-      dom-helpers: 3.4.0
-      invariant: 2.2.4
-      keycode: 2.2.1
-      prop-types: 15.8.1
-      prop-types-extra: 1.1.1(react@16.14.0)
-      react-dom: 16.14.0(react@16.14.0)
-      react-overlays: 0.9.3(react-dom@16.14.0)
-      react-prop-types: 0.4.0(react@16.14.0)
-      react-transition-group: 2.9.0(react-dom@16.14.0)
-      uncontrollable: 7.2.1(react@16.14.0)
-      warning: 3.0.0
-
   react-bootstrap@0.33.1(react-dom@16.14.0)(react@16.14.0):
     dependencies:
       '@babel/runtime-corejs2': 7.29.2
@@ -19777,22 +19721,6 @@ snapshots:
       prop-types-extra: 1.1.1(react@16.14.0)
       react: 16.14.0
       react-dom: 16.14.0(react@16.14.0)
-      react-overlays: 0.9.3(react-dom@16.14.0)(react@16.14.0)
-      react-prop-types: 0.4.0(react@16.14.0)
-      react-transition-group: 2.9.0(react-dom@16.14.0)(react@16.14.0)
-      uncontrollable: 7.2.1(react@16.14.0)
-      warning: 3.0.0
-
-  react-bootstrap@0.33.1(react@16.14.0):
-    dependencies:
-      '@babel/runtime-corejs2': 7.29.2
-      classnames: 2.5.1
-      dom-helpers: 3.4.0
-      invariant: 2.2.4
-      keycode: 2.2.1
-      prop-types: 15.8.1
-      prop-types-extra: 1.1.1(react@16.14.0)
-      react: 16.14.0
       react-overlays: 0.9.3(react-dom@16.14.0)(react@16.14.0)
       react-prop-types: 0.4.0(react@16.14.0)
       react-transition-group: 2.9.0(react-dom@16.14.0)(react@16.14.0)
@@ -19908,14 +19836,6 @@ snapshots:
       react: 16.14.0
       react-dom: 16.14.0(react@16.14.0)
 
-  react-i18next@11.18.6(i18next@19.9.2)(react-dom@16.14.0):
-    dependencies:
-      '@babel/runtime': 7.29.2
-      html-parse-stringify: 3.0.1
-      i18next: 19.9.2
-    optionalDependencies:
-      react-dom: 16.14.0(react@16.14.0)
-
   react-i18next@11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0):
     dependencies:
       '@babel/runtime': 7.29.2
@@ -19960,16 +19880,6 @@ snapshots:
     dependencies:
       react: 16.14.0
       react-dom: 16.14.0(react@16.14.0)
-
-  react-overlays@0.9.3(react-dom@16.14.0):
-    dependencies:
-      classnames: 2.5.1
-      dom-helpers: 3.4.0
-      prop-types: 15.8.1
-      prop-types-extra: 1.1.1(react@16.14.0)
-      react-dom: 16.14.0(react@16.14.0)
-      react-transition-group: 2.9.0(react-dom@16.14.0)
-      warning: 3.0.0
 
   react-overlays@0.9.3(react-dom@16.14.0)(react@16.14.0):
     dependencies:
@@ -20081,14 +19991,6 @@ snapshots:
       react-dom: 16.14.0(react@16.14.0)
       react-lifecycles-compat: 3.0.4
       react-virtualized: 9.22.6(react-dom@16.14.0)(react@16.14.0)
-
-  react-transition-group@2.9.0(react-dom@16.14.0):
-    dependencies:
-      dom-helpers: 3.4.0
-      loose-envify: 1.4.0
-      prop-types: 15.8.1
-      react-dom: 16.14.0(react@16.14.0)
-      react-lifecycles-compat: 3.0.4
 
   react-transition-group@2.9.0(react-dom@16.14.0)(react@16.14.0):
     dependencies:
@@ -21528,127 +21430,6 @@ snapshots:
       - msw
 
   void-elements@3.1.0: {}
-
-  vortex-api@file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(immutability-helper@3.1.1)(react-bootstrap@0.33.1)(react-dom@16.14.0)(react-i18next@11.18.6)(react@16.14.0)(redux@4.2.1)(semver@7.7.4):
-    dependencies:
-      '@types/bluebird': 3.5.20
-      bluebird: 3.7.2
-      immutability-helper: 3.1.1
-      react: 16.14.0
-      react-bootstrap: 0.33.1(react-dom@16.14.0)(react@16.14.0)
-      react-dom: 16.14.0(react@16.14.0)
-      react-i18next: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0)
-      redux: 4.2.1
-      semver: 7.7.4
-
-  vortex-api@file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-bootstrap@0.33.1):
-    dependencies:
-      '@types/bluebird': 3.5.20
-      bluebird: 3.7.2
-      react-bootstrap: 0.33.1
-
-  vortex-api@file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-bootstrap@0.33.1)(react-dom@16.14.0)(react-i18next@11.18.6)(react@16.14.0)(redux-act@1.8.0)(redux-thunk@2.4.2)(redux@4.2.1):
-    dependencies:
-      '@types/bluebird': 3.5.20
-      bluebird: 3.7.2
-      react: 16.14.0
-      react-bootstrap: 0.33.1(react-dom@16.14.0)(react@16.14.0)
-      react-dom: 16.14.0(react@16.14.0)
-      react-i18next: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0)
-      redux: 4.2.1
-      redux-act: 1.8.0
-      redux-thunk: 2.4.2(redux@4.2.1)
-
-  vortex-api@file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-bootstrap@0.33.1)(react@16.14.0)(redux@4.2.1)(semver@7.7.4):
-    dependencies:
-      '@types/bluebird': 3.5.20
-      bluebird: 3.7.2
-      react: 16.14.0
-      react-bootstrap: 0.33.1(react@16.14.0)
-      redux: 4.2.1
-      semver: 7.7.4
-
-  vortex-api@file:packages/vortex-api(@types/bluebird@3.5.20)(bluebird@3.7.2)(react-i18next@11.18.6)(react-redux@7.2.9)(react@16.14.0)(redux-act@1.8.0)(semver@7.7.4):
-    dependencies:
-      '@types/bluebird': 3.5.20
-      bluebird: 3.7.2
-      react: 16.14.0
-      react-i18next: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0)
-      react-redux: 7.2.9(react-dom@16.14.0)(react@16.14.0)
-      redux-act: 1.8.0
-      semver: 7.7.4
-
-  vortex-api@file:packages/vortex-api(@types/bluebird@3.5.20)(react-i18next@11.18.6)(react-redux@7.2.9)(redux-act@1.8.0)(redux@4.2.1)(semver@7.7.4):
-    dependencies:
-      '@types/bluebird': 3.5.20
-      react-i18next: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0)
-      react-redux: 7.2.9(react-dom@16.14.0)(react@16.14.0)
-      redux: 4.2.1
-      redux-act: 1.8.0
-      semver: 7.7.4
-
-  vortex-api@file:packages/vortex-api(bluebird@3.7.2)(immutability-helper@3.1.1)(react-bootstrap@0.33.1)(react-dom@16.14.0)(react-i18next@11.18.6)(react@16.14.0)(redux-act@1.8.0)(redux-thunk@2.4.2):
-    dependencies:
-      bluebird: 3.7.2
-      immutability-helper: 3.1.1
-      react: 16.14.0
-      react-bootstrap: 0.33.1(react-dom@16.14.0)(react@16.14.0)
-      react-dom: 16.14.0(react@16.14.0)
-      react-i18next: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0)
-      redux-act: 1.8.0
-      redux-thunk: 2.4.2(redux@4.2.1)
-
-  vortex-api@file:packages/vortex-api(bluebird@3.7.2)(immutability-helper@3.1.1)(react-i18next@11.18.6)(react@16.14.0)(redux-act@1.8.0)(semver@7.7.4):
-    dependencies:
-      bluebird: 3.7.2
-      immutability-helper: 3.1.1
-      react: 16.14.0
-      react-i18next: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0)
-      redux-act: 1.8.0
-      semver: 7.7.4
-
-  vortex-api@file:packages/vortex-api(bluebird@3.7.2)(immutability-helper@3.1.1)(react-i18next@11.18.6)(redux-act@1.8.0)(redux@4.2.1):
-    dependencies:
-      bluebird: 3.7.2
-      immutability-helper: 3.1.1
-      react-i18next: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0)
-      redux: 4.2.1
-      redux-act: 1.8.0
-
-  vortex-api@file:packages/vortex-api(bluebird@3.7.2)(react-bootstrap@0.33.1)(react-i18next@11.18.6)(redux-act@1.8.0)(redux-thunk@2.4.2)(redux@4.2.1):
-    dependencies:
-      bluebird: 3.7.2
-      react-bootstrap: 0.33.1
-      react-i18next: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0)
-      redux: 4.2.1
-      redux-act: 1.8.0
-      redux-thunk: 2.4.2(redux@4.2.1)
-
-  vortex-api@file:packages/vortex-api(react-bootstrap@0.33.1)(react-dom@16.14.0)(react-i18next@11.18.6)(redux-act@1.8.0)(redux-thunk@2.4.2):
-    dependencies:
-      react-bootstrap: 0.33.1(react-dom@16.14.0)
-      react-dom: 16.14.0(react@16.14.0)
-      react-i18next: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)
-      redux-act: 1.8.0
-      redux-thunk: 2.4.2(redux@4.2.1)
-
-  vortex-api@file:packages/vortex-api(react-bootstrap@0.33.1)(react-dom@16.14.0)(react-i18next@11.18.6)(redux-act@1.8.0)(redux@4.2.1):
-    dependencies:
-      react-bootstrap: 0.33.1(react-dom@16.14.0)
-      react-dom: 16.14.0(react@16.14.0)
-      react-i18next: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)
-      redux: 4.2.1
-      redux-act: 1.8.0
-
-  vortex-api@file:packages/vortex-api(react-bootstrap@0.33.1)(react-i18next@11.18.6)(react-redux@7.2.9)(react@16.14.0)(redux-act@1.8.0)(relaxed-json@1.0.3)(semver@7.7.4):
-    dependencies:
-      react: 16.14.0
-      react-bootstrap: 0.33.1(react@16.14.0)
-      react-i18next: 11.18.6(i18next@19.9.2)(react-dom@16.14.0)(react@16.14.0)
-      react-redux: 7.2.9(react-dom@16.14.0)(react@16.14.0)
-      redux-act: 1.8.0
-      relaxed-json: 1.0.3
-      semver: 7.7.4
 
   vortex-parse-ini@https://codeload.github.com/Nexus-Mods/vortex-parse-ini/tar.gz/2425af99d1cff2331ccf3aacfa892c314e99e18d:
     dependencies:
