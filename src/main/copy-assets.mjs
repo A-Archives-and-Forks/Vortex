@@ -61,7 +61,9 @@ for (const file of await glob("assets/licenses/*", { cwd: WORKSPACE })) {
 for (const bin of ["dotnetprobe", "dotnetprobe.exe", "dotnetprobe.pdb"]) {
   try {
     await copy(join(WORKSPACE, "assets", bin), join(BUILD, bin));
-  } catch {}
+  } catch {
+    // ignored
+  }
 }
 
 // Locales (dev only)
