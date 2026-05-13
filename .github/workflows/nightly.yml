@@ -5,6 +5,9 @@ on:
     - cron: "0 19 * * *" # Nightly at 19:00 UTC
   workflow_dispatch:
 
+permissions:
+  actions: write
+
 jobs:
   trigger:
     runs-on: ubuntu-latest
