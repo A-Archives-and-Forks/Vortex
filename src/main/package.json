@@ -42,13 +42,7 @@
           "build"
         ]
       },
-      "package": {
-        "cache": false,
-        "dependsOn": [
-          "publish"
-        ]
-      },
-      "package:nosign": {
+      "package*": {
         "cache": false,
         "dependsOn": [
           "publish"
