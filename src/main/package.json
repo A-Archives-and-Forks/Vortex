@@ -9,6 +9,7 @@
   "main": "build/main.cjs",
   "scripts": {
     "start": "pnpm electron .",
+    "postinstall": "pnpm exec electron-rebuild",
     "build": "node ./build.mjs",
     "typecheck": "pnpm tsc",
     "lint": "pnpm eslint --quiet --concurrency auto .",
@@ -122,6 +123,7 @@
     "@headlessui/react": "catalog:",
     "@mdi/js": "catalog:",
     "@msgpack/msgpack": "catalog:",
+    "@nexusmods/adaptor-api": "workspace:*",
     "@nexusmods/fomod-installer-ipc": "catalog:",
     "@nexusmods/fomod-installer-native": "catalog:",
     "@nexusmods/nexus-api": "catalog:",
@@ -135,7 +137,6 @@
     "@tailwindcss/cli": "catalog:",
     "@types/bluebird": "catalog:",
     "@types/uuid": "catalog:",
-    "@nexusmods/adaptor-api": "workspace:*",
     "bbcode-to-react": "catalog:",
     "big.js": "catalog:",
     "bluebird": "catalog:",
@@ -235,7 +236,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@vortex/adaptor-cyberpunk2077": "workspace:*",
+    "@electron/rebuild": "catalog:",
     "@types/bbcode-to-react": "catalog:",
     "@types/big.js": "catalog:",
     "@types/content-disposition": "catalog:",
@@ -268,6 +269,7 @@
     "@types/write-file-atomic": "catalog:",
     "@types/ws": "catalog:",
     "@types/xml2js": "catalog:",
+    "@vortex/adaptor-cyberpunk2077": "workspace:*",
     "@vortex/shared": "workspace:*",
     "@welldone-software/why-did-you-render": "catalog:",
     "cross-env": "catalog:",
