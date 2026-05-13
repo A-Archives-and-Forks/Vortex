@@ -32,6 +32,11 @@ console.error = (...args) => {
 window.addEventListener("error", earlyErrHandler);
 window.addEventListener("unhandledrejection", earlyErrHandler);
 
+if (!process.env.NODE_ENV) {
+  const key = "NODE_ENV";
+  process.env[key] = "development";
+}
+
 if (process.env.NODE_ENV === "development") {
   process.traceProcessWarnings = true;
   const sourceMapSupport = require("source-map-support");
