@@ -10,10 +10,12 @@ const require = createRequire(import.meta.url);
 
 const WORKSPACE = join(import.meta.dirname, "../..");
 const BUILD = join(import.meta.dirname, "build");
+const ASSETS = join(BUILD, "assets");
 
 async function copy(src, dest) {
   await mkdir(join(dest, ".."), { recursive: true });
   await cp(src, dest, { recursive: true, force: true });
+  console.log(`copied ${src} to ${dest}`);
 }
 
 // @vortex/stylesheets compiled outputs
@@ -46,21 +48,21 @@ await copy(join(WORKSPACE, "src/queries"), join(BUILD, "queries"));
 
 // Static assets
 for (const dir of ["fonts", "icons", "images", "pictograms"]) {
-  await copy(join(WORKSPACE, "assets", dir), join(BUILD, dir));
+  await copy(join(WORKSPACE, "assets", dir), join(ASSETS, dir));
 }
 
 for (const file of await glob("assets/*.json", { cwd: WORKSPACE })) {
-  await copy(join(WORKSPACE, file), join(BUILD, basename(file)));
+  await copy(join(WORKSPACE, file), join(ASSETS, basename(file)));
 }
 
 for (const file of await glob("assets/licenses/*", { cwd: WORKSPACE })) {
-  await copy(join(WORKSPACE, file), join(BUILD, "licenses", basename(file)));
+  await copy(join(WORKSPACE, file), join(ASSETS, "licenses", basename(file)));
 }
 
 // Platform binaries (may not exist on current platform)
 for (const bin of ["dotnetprobe", "dotnetprobe.exe", "dotnetprobe.pdb"]) {
   try {
-    await copy(join(WORKSPACE, "assets", bin), join(BUILD, bin));
+    await copy(join(WORKSPACE, "assets", bin), join(ASSETS, bin));
   } catch {
     // ignored
   }

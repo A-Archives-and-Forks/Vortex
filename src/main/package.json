@@ -72,6 +72,7 @@
           {
             "dependentTasksOutputFiles": "**/dist/**"
           },
+          "{projectRoot}/copy-assets.mjs",
           "{workspaceRoot}/src/stylesheets/**/*.scss",
           "{workspaceRoot}/src/renderer/src/index.html",
           "{workspaceRoot}/src/renderer/src/splash.html",
@@ -81,14 +82,9 @@
         ],
         "outputs": [
           "{projectRoot}/build/assets/",
+          "{projectRoot}/build/queries/",
           "{projectRoot}/build/index.html",
           "{projectRoot}/build/splash.html",
-          "{projectRoot}/build/queries/",
-          "{projectRoot}/build/fonts/",
-          "{projectRoot}/build/icons/",
-          "{projectRoot}/build/images/",
-          "{projectRoot}/build/pictograms/",
-          "{projectRoot}/build/licenses/",
           "{projectRoot}/build/LICENSE.md",
           "{projectRoot}/build/modules.json"
         ]
@@ -110,7 +106,8 @@
           "default",
           {
             "dependentTasksOutputFiles": "**/dist/**"
-          }
+          },
+          "{projectRoot}/copy-extensions.mjs"
         ],
         "outputs": [
           "{projectRoot}/build/bundledPlugins/"
