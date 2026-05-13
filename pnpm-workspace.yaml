@@ -291,10 +291,10 @@ dedupePeers: true
 
 engineStrict: true
 failIfNoMatch: true
-forceLegacyDeploy: true
 
 minimumReleaseAge: 2880
 minimumReleaseAgeIgnoreMissingTime: true
+minimumReleaseAgeStrict: false # TODO: set true after they fixed their shit
 
 overrides:
   "@types/react": "16"
