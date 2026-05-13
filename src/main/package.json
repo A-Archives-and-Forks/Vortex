@@ -44,11 +44,25 @@
           "build"
         ]
       },
-      "package*": {
+      "package": {
         "cache": false,
         "dependsOn": [
           "publish"
-        ]
+        ],
+        "executor": "nx:run-script",
+        "options": {
+          "script": "package"
+        }
+      },
+      "package:nosign": {
+        "cache": false,
+        "dependsOn": [
+          "publish"
+        ],
+        "executor": "nx:run-script",
+        "options": {
+          "script": "package:nosign"
+        }
       },
       "copy-assets": {
         "executor": "nx:run-commands",
