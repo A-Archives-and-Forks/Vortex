@@ -28,6 +28,9 @@ catalogs:
     '@duckdb/node-api':
       specifier: 1.5.1-r.1
       version: 1.5.1-r.1
+    '@electron/rebuild':
+      specifier: ^4.0.4
+      version: 4.0.4
     '@electron/remote':
       specifier: ^2.0.12
       version: 2.1.3
@@ -4279,6 +4282,9 @@ importers:
         specifier: 'catalog:'
         version: 4.3.6
     devDependencies:
+      '@electron/rebuild':
+        specifier: 'catalog:'
+        version: 4.0.4
       '@types/bbcode-to-react':
         specifier: 'catalog:'
         version: 0.2.4
@@ -5592,6 +5598,11 @@ packages:
     engines: {node: '>=12.0.0'}
     hasBin: true
 
+  '@electron/rebuild@4.0.4':
+    resolution: {integrity: sha512-Rzc39XPdk/+/wBG8MfwAHohXflep0ITUfulb6Rgz3R0NeSB1noE+E9/M/cb8ftCAiyDD9PPhLuuWgE1GaInbKg==}
+    engines: {node: '>=22.12.0'}
+    hasBin: true
+
   '@electron/remote@2.1.3':
     resolution: {integrity: sha512-XlpxC8S4ttj/v2d+PKp9na/3Ev8bV7YWNL7Cw5b9MAWgTphEml7iYgbc7V0r9D6yDOfOkj06bchZgOZdlWJGNA==}
     peerDependencies:
@@ -5778,6 +5789,10 @@ packages:
   '@malept/cross-spawn-promise@1.1.1':
     resolution: {integrity: sha512-RTBGWL5FWQcg9orDOCcp4LvItNzUPcyEU9bwaeJX0rJ1IQxzucC48Y0/sQLp/g6t99IQgAlGIaesJS+gTn7tVQ==}
     engines: {node: '>= 10'}
+
+  '@malept/cross-spawn-promise@2.0.0':
+    resolution: {integrity: sha512-1DpKU0Z5ThltBwjNySMC14g0CkbyhCaz9FkhxqNsZI6uAPJXFS8cMXlBKo26FJ8ZuW6S9GCMcR9IO5k2X5/9Fg==}
+    engines: {node: '>= 12.13.0'}
 
   '@malept/flatpak-bundler@0.4.0':
     resolution: {integrity: sha512-9QOtNffcOF/c1seMCDnjckb3R9WHcG34tky+FHpNKKCW0wc/scYLwMtO+ptyGUfMW0/b/n4qRiALlaFHc9Oj7Q==}
@@ -10525,12 +10540,19 @@ packages:
     resolution: {integrity: sha512-6u9UwL0HlAl21+agMN3YAMXcKByMqwGx+pq+P76vii5f7hTPtKDp08/H9py6DY+cfDw7kQNTGEj/rly3IgbNQA==}
     engines: {node: '>=10'}
 
+  node-abi@4.31.0:
+    resolution: {integrity: sha512-Erq5w/t3syw3s4sDsUaX4QttIdBPsGKTT1DTRsCkTonGggczhlDKm/wDX3o+HPJpQ41EjXCbcmXf0tgr5YZJXw==}
+    engines: {node: '>=22.12.0'}
+
   node-abort-controller@3.1.1:
     resolution: {integrity: sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==}
 
   node-addon-api@8.5.0:
     resolution: {integrity: sha512-/bRZty2mXUIFY/xU5HLvveNHlswNJej+RnxBjOMkidWfwZzgTbPG1E3K5TOxRLOR+5hX7bSofy8yf1hZevMS8A==}
     engines: {node: ^18 || ^20 || >= 21}
+
+  node-api-version@0.2.1:
+    resolution: {integrity: sha512-2xP/IGGMmmSQpI1+O/k72jF/ykvZ89JeuKX3TLJAYPDVLUalrshrLHkeVcCCZqG/eEa635cr8IBYzgnDvM2O8Q==}
 
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
@@ -11322,6 +11344,10 @@ packages:
     resolution: {integrity: sha512-KiwVUcFu1RErkI97ywr8nvx8dNOpT03rbnma0SSalTYjkrPYaEajR4a/MRt6DZ46K6arDRbWMNHF+xH7G7n/8A==}
     peerDependencies:
       react: '*'
+
+  read-binary-file-arch@1.0.6:
+    resolution: {integrity: sha512-BNg9EN3DD3GsDXX7Aa8O4p92sryjkmzYYgmgTAc6CA4uGLEDzFfxOxugu21akOxpcXHiEgsYkC6nPsQvLLLmEg==}
+    hasBin: true
 
   read-config-file@6.3.2:
     resolution: {integrity: sha512-M80lpCjnE6Wt6zb98DoW8WHR09nzMSpu8XHtPkiTHrJ5Az9CybfeQhTJ8D7saeBHpGhLPIVyA8lcL6ZmdKwY6Q==}
@@ -13588,6 +13614,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@electron/rebuild@4.0.4':
+    dependencies:
+      '@malept/cross-spawn-promise': 2.0.0
+      debug: 4.4.3
+      node-abi: 4.31.0
+      node-api-version: 0.2.1
+      node-gyp: 12.3.0
+      read-binary-file-arch: 1.0.6
+    transitivePeerDependencies:
+      - supports-color
+
   '@electron/remote@2.1.3(electron@42.0.0)':
     dependencies:
       electron: 42.0.0
@@ -13841,6 +13878,10 @@ snapshots:
   '@kwsites/promise-deferred@1.1.1': {}
 
   '@malept/cross-spawn-promise@1.1.1':
+    dependencies:
+      cross-spawn: 7.0.6
+
+  '@malept/cross-spawn-promise@2.0.0':
     dependencies:
       cross-spawn: 7.0.6
 
@@ -18807,9 +18848,17 @@ snapshots:
     dependencies:
       semver: 7.7.4
 
+  node-abi@4.31.0:
+    dependencies:
+      semver: 7.7.4
+
   node-abort-controller@3.1.1: {}
 
   node-addon-api@8.5.0: {}
+
+  node-api-version@0.2.1:
+    dependencies:
+      semver: 7.7.4
 
   node-fetch@2.7.0:
     dependencies:
@@ -19736,6 +19785,12 @@ snapshots:
     dependencies:
       lodash: 4.17.23
       react: 16.14.0
+
+  read-binary-file-arch@1.0.6:
+    dependencies:
+      debug: 4.4.3
+    transitivePeerDependencies:
+      - supports-color
 
   read-config-file@6.3.2:
     dependencies:
