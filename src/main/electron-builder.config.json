@@ -70,6 +70,5 @@
     "duckdb-extensions"
   ],
   "buildDependenciesFromSource": false,
-  "npmRebuild": false,
-  "afterPack": "./afterPack.cjs"
+  "npmRebuild": false
 }

@@ -38,7 +38,6 @@ catalog:
   "@babel/preset-typescript": 7.16.7
   "@babel/register": 7.16.8
   "@duckdb/node-api": 1.5.1-r.1
-  "@electron/asar": 4.2.0
   "@electron/rebuild": ^4.0.4
   "@electron/remote": ^2.0.12
   "@eslint-react/eslint-plugin": 2.3.7
@@ -292,7 +291,6 @@ dedupePeers: true
 
 engineStrict: true
 failIfNoMatch: true
-forceLegacyDeploy: true
 
 minimumReleaseAge: 2880
 minimumReleaseAgeIgnoreMissingTime: true
