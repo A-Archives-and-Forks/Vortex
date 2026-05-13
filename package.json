@@ -44,12 +44,6 @@
   "lint-staged": {
     "*": "pnpm oxfmt --no-error-on-unmatched-pattern"
   },
-  "config": {
-    "npm_gyp_dist_url": "https://electronjs.org/headers",
-    "npm_gyp_target": "42.0.0",
-    "npm_gyp_runtime": "electron",
-    "npm_gyp_msvs_version": 2022
-  },
   "dependencies": {
     "node": "catalog:"
   },
