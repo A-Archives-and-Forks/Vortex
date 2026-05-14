@@ -86,7 +86,7 @@ runs:
         python-version: "3.11"
 
     - name: Download CodeSignTool
-      id: codesign
+      if: ${{ inputs.use-codesigning == 'true' || steps.nightly-flag.outputs.is_nightly == 'true' }}
       shell: pwsh
       run: .\download-codesigntool.ps1
 
